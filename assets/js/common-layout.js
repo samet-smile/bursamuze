@@ -44,4 +44,16 @@
     const href = (a.getAttribute("href") || "").toLowerCase();
     a.classList.toggle("active", href === current);
   });
+
+  // Enforce minimum 14px font size across all elements (desktop & mobile).
+  const enforceMinFont = () => {
+    document.querySelectorAll("*").forEach(el => {
+      const cs = getComputedStyle(el);
+      const fs = parseFloat(cs.fontSize);
+      if (fs && fs < 14) el.style.setProperty("font-size", "14px", "important");
+    });
+  };
+  enforceMinFont();
+  // Re-run after dynamic content injection (header/footer).
+  requestAnimationFrame(enforceMinFont);
 })();

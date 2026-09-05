@@ -173,6 +173,11 @@ body.v80-page *,body.v80-page *:before,body.v80-page *:after{border-radius:0!imp
 .v80-card-preview .chip{width:38px;height:28px;background:#d7b85a}
 .v80-card-preview strong{font-size:20px;letter-spacing:2px}
 .v80-card-preview small{color:#aeb4be}
+
+/* ===== Global minimum font-size: 14px (desktop & mobile) ===== */
+*{
+  font-size:max(14px,1em)!important;
+}
 @media(max-width:1050px){
  .v80-grid,.v80-form-layout,.v80-success,.v80-academy-grid{grid-template-columns:1fr}
  .v80-summary{position:static}

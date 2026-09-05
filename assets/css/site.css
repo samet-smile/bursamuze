@@ -7065,3 +7065,8 @@ body:not(.home-page) .site-header.sticky{
 .main-nav.header-button-nav.header-button-nav-group .header-nav-box:not(.header-nav-buy).active i{
   color:#f5db3f!important;
 }
+
+/* ===== Global minimum font-size: 14px (desktop & mobile) ===== */
+*{
+  font-size:max(14px,1em)!important;
+}
