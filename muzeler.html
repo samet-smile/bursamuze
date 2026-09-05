@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+
+<html lang="tr">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
+<meta content="#10121c" name="theme-color"/>
+<meta content="BursaMüze müze listeleme sayfası." name="description"/>
+<title>Müzeler | BursaMüze</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+<link href="assets/css/site.css" rel="stylesheet"/>
+<style>
+    body.museum-directory-page{background:#f3f4f7}
+    .museum-directory-hero{padding:138px 0 42px;background:linear-gradient(135deg,#11131d 0%,#2a2f42 45%,#51458a 100%);color:#fff;position:relative;overflow:hidden}
+    .museum-directory-hero::before{content:"";position:absolute;inset:auto auto -140px -120px;width:340px;height:340px;border-radius:50%;background:rgba(255,255,255,.08);filter:blur(8px)}
+    .museum-directory-hero::after{content:"";position:absolute;right:-90px;top:-120px;width:320px;height:320px;border-radius:50%;background:rgba(111,76,255,.36);filter:blur(60px)}
+    .museum-directory-hero .container{position:relative;z-index:1}
+    .museum-directory-breadcrumb{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#ffffffa8;margin-bottom:18px}
+    .museum-directory-title-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:end}
+    .museum-directory-title-row h1{margin:0;font-size:clamp(46px,6vw,76px);line-height:.92;letter-spacing:-3px;max-width:720px}
+    .museum-directory-title-row p{margin:18px 0 0;color:#d7d9e2;max-width:680px;line-height:1.75}
+    .museum-count-chip{display:inline-flex;align-items:center;gap:10px;padding:16px 18px;border-radius:22px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);font-weight:800;white-space:nowrap;backdrop-filter:blur(12px)}
+    .museum-count-chip b{font-size:28px;line-height:1}
+    .museum-intro-section{padding:26px 0 34px}
+    .museum-intro-grid{display:grid;grid-template-columns:400px minmax(0,1fr);gap:0;align-items:center;position:relative;overflow:visible}
+    .museum-intro-main{padding:32px 86px 32px 32px;border-radius:30px;background:linear-gradient(160deg,#0f121c,#2a2f44);color:#fff;min-height:320px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden;z-index:2}
+    .museum-intro-main::after{content:"";position:absolute;right:-70px;bottom:-70px;width:220px;height:220px;border-radius:50%;border:1px solid rgba(255,255,255,.14)}
+    .museum-intro-main>*{position:relative;z-index:1}
+    .museum-intro-main .kicker{color:#f5db3f}
+    .museum-intro-main h2{margin:10px 0 16px;font-size:46px;line-height:.95;letter-spacing:-2.3px}
+    .museum-intro-main p{margin:0;color:#cfd3de;line-height:1.8}
+    .museum-intro-main .museum-mini-note{display:flex;align-items:flex-start;gap:12px;margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,255,255,.12)}
+    .museum-intro-main .museum-mini-note i{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:rgba(255,255,255,.12);font-size:20px;color:#f5db3f;flex:0 0 44px}
+    .museum-intro-main .museum-mini-note span{font-size:12px;line-height:1.75;color:#d6dae6}
+    .museum-intro-side-wrap{display:flex;align-items:center;position:relative;z-index:1}
+    .museum-intro-side{width:100%;padding:26px 30px 26px 88px;border-radius:28px;background:#fff;border:1px solid #e6e8ef;box-shadow:0 18px 50px rgba(17,19,29,.08);margin-left:-64px;min-height:245px;position:relative}
+    .museum-intro-side h3{margin:0 0 16px;font-size:26px;line-height:1.15;letter-spacing:-1px}
+    .museum-intro-side p{margin:0 0 18px;color:#6d7280;line-height:1.75}
+    .museum-icon-article{display:grid;gap:14px}
+    .museum-icon-row{display:grid;grid-template-columns:52px 1fr;gap:14px;align-items:start;padding:14px 0;border-top:1px solid #eceef4}
+    .museum-icon-row:first-child{padding-top:0;border-top:0}
+    .museum-icon-row i{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;background:#f3efff;color:#6f4cff;font-size:21px}
+    .museum-icon-row h4{margin:2px 0 6px;font-size:16px;line-height:1.2}
+    .museum-icon-row p{margin:0;font-size:13px;color:#6d7280;line-height:1.7}
+
+    .museum-directory-listing{padding:0 0 96px}
+    .museum-directory-list-head{display:flex;justify-content:space-between;align-items:end;gap:20px;margin:0 0 20px}
+    .museum-directory-list-head h2{margin:0;font-size:48px;line-height:.96;letter-spacing:-2px}
+    .museum-directory-list-head p{margin:0;max-width:640px;color:#6d7280;line-height:1.75}
+    .museum-directory-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+    .museum-directory-grid .museum-dual-card:last-child:nth-child(odd){grid-column:1 / -1}
+    .museum-dual-card{display:grid;grid-template-columns:minmax(0,1fr) 250px;overflow:hidden;border-radius:30px;min-height:370px;background:#fff;border:1px solid #e7e9ef}
+    .museum-visual-shell{position:relative;min-height:370px;background:#111}
+    .museum-visual-back,
+    .museum-leaf-visual{position:absolute;inset:0}
+    .museum-visual-back img,
+    .museum-leaf-visual img{width:100%;height:100%;object-fit:cover}
+    .museum-leaf-visual img{animation:leafFloatImg 5.5s ease-in-out infinite;transition:transform .7s ease}
+    .museum-visual-back::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(9,11,19,.06),rgba(9,11,19,.66) 100%)}
+    .museum-leaf-visual{inset:16px 18px 16px 18px;clip-path:polygon(50% 0%,75% 10%,93% 27%,100% 50%,93% 73%,75% 91%,50% 100%,24% 91%,7% 73%,0% 50%,7% 27%,24% 10%);opacity:.95;box-shadow:0 20px 45px rgba(0,0,0,.24);overflow:hidden;transform-origin:center center;transition:transform .7s cubic-bezier(.2,.8,.2,1),opacity .5s ease,filter .45s ease}
+    .museum-leaf-visual::after{content:"";position:absolute;inset:0;border:1px solid rgba(255,255,255,.35);mix-blend-mode:screen}
+    .museum-dual-card:hover .museum-leaf-visual{transform:translateX(108%) rotate(10deg) scale(.88);opacity:.24;filter:blur(1px)}
+    .museum-dual-card:hover .museum-visual-back img{transform:scale(1.05)}
+    .museum-visual-back img{transition:transform .7s ease}
+    .museum-badge{position:absolute;left:20px;top:20px;z-index:2;display:inline-flex;align-items:center;gap:8px;padding:9px 12px;border-radius:999px;background:rgba(17,19,29,.58);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.18);font-size:10px;font-weight:900;letter-spacing:.8px;color:#fff}
+    .museum-visual-copy{position:absolute;left:22px;right:22px;bottom:20px;z-index:2;color:#fff}
+    .museum-visual-copy small{display:inline-block;margin-bottom:8px;font-size:10px;font-weight:900;letter-spacing:1.2px;color:#f3e79a}
+    .museum-visual-copy h3{margin:0 0 9px;font-size:32px;line-height:.98;letter-spacing:-1.3px;max-width:92%}
+    .museum-visual-copy p{margin:0;font-size:13px;line-height:1.72;color:#eef1f9;max-width:520px}
+    .museum-rail-actions{display:grid;grid-template-rows:repeat(3,1fr);background:#fbfbfd}
+    .museum-rail-btn{display:grid;grid-template-columns:48px minmax(0,1fr) 22px;align-items:center;gap:12px;padding:20px 18px;border-left:1px solid #eceef4;border-top:1px solid #eceef4;transition:background .25s ease,transform .25s ease,color .25s ease}
+    .museum-rail-btn:first-child{border-top:0}
+    .museum-rail-btn:hover{background:#11131d;color:#fff;transform:translateX(-2px)}
+    .museum-rail-btn:hover .museum-rail-icon{background:#fff;color:#11131d}
+    .museum-rail-btn:hover .museum-rail-text small{color:#cad0df}
+    .museum-rail-icon{width:48px;height:48px;border-radius:16px;background:#f1f3f9;color:#6f4cff;display:grid;place-items:center;font-size:20px;transition:.25s ease}
+    .museum-rail-text{min-width:0}
+    .museum-rail-text small{display:block;font-size:10px;font-weight:900;letter-spacing:.9px;color:#7b8090;margin-bottom:4px;transition:color .25s ease}
+    .museum-rail-text b{display:block;font-size:18px;line-height:1.25;letter-spacing:-.3px}
+    .museum-rail-btn > i:last-child{font-size:18px;opacity:.72}
+
+    @keyframes leafFloatImg{0%,100%{transform:scale(1) translateY(0)}50%{transform:scale(1.03) translateY(-6px)}}
+
+    @media (max-width:1100px){
+      .museum-directory-title-row{grid-template-columns:1fr}
+      .museum-intro-grid{grid-template-columns:1fr;gap:14px}
+      .museum-intro-main{min-height:unset;padding:28px 28px 26px}
+      .museum-intro-side-wrap{display:block}
+      .museum-intro-side{margin-left:0;padding:24px 24px 24px;min-height:unset}
+      .museum-directory-list-head{flex-direction:column;align-items:flex-start}
+      .museum-dual-card{grid-template-columns:minmax(0,1fr) 222px}
+      .museum-visual-copy h3{font-size:28px}
+    }
+
+    @media (max-width:900px){
+      .museum-directory-grid{grid-template-columns:1fr}
+      .museum-directory-grid .museum-dual-card:last-child:nth-child(odd){grid-column:auto}
+      .museum-dual-card{grid-template-columns:minmax(0,1fr) 220px}
+    }
+
+    @media (max-width:720px){
+      .museum-directory-hero{padding:110px 0 30px}
+      .museum-directory-title-row h1{font-size:44px;letter-spacing:-2px}
+      .museum-directory-title-row p{font-size:14px;line-height:1.8}
+      .museum-count-chip{padding:14px 16px}
+      .museum-count-chip b{font-size:24px}
+      .museum-intro-section{padding:18px 0 24px}
+      .museum-intro-main{padding:24px;border-radius:24px}
+      .museum-intro-main h2{font-size:38px}
+      .museum-intro-side{padding:22px 20px;border-radius:24px;margin-left:0}
+      .museum-intro-side h3{font-size:24px}
+      .museum-directory-list-head h2{font-size:38px}
+      .museum-dual-card{grid-template-columns:1fr;min-height:auto}
+      .museum-visual-shell{min-height:320px}
+      .museum-rail-actions{grid-template-columns:1fr;grid-template-rows:repeat(3,auto)}
+      .museum-rail-btn{min-height:86px;border-left:0}
+      .museum-visual-copy h3{font-size:28px;max-width:100%}
+      .museum-visual-copy p{font-size:12px}
+      .museum-leaf-visual{inset:0}
+      .museum-directory-page .museum-visual-shell::before,
+      .museum-directory-page .museum-visual-shell::after{width:54px;height:54px}
+    }
+
+    @media (max-width:520px){
+      .museum-directory-hero{padding:100px 0 24px}
+      .museum-directory-breadcrumb{margin-bottom:14px}
+      .museum-directory-title-row h1{font-size:38px}
+      .museum-directory-title-row p{margin-top:14px}
+      .museum-intro-main h2{font-size:34px;letter-spacing:-1.6px}
+      .museum-directory-list-head h2{font-size:32px;letter-spacing:-1.4px}
+      .museum-visual-shell{min-height:300px}
+      .museum-badge{left:16px;top:16px}
+      .museum-visual-copy{left:16px;right:16px;bottom:16px}
+      .museum-visual-copy h3{font-size:25px}
+      .museum-rail-btn{grid-template-columns:44px minmax(0,1fr) 18px;padding:17px 15px;gap:10px}
+      .museum-rail-icon{width:44px;height:44px;border-radius:14px;font-size:18px}
+      .museum-rail-text b{font-size:16px}
+    }
+  </style>
+<style>
+/* ===== V41 Museum directory: sharp system + real page-turn image effect ===== */
+
+/* Sharp-corner design language */
+.museum-directory-page .museum-count-chip,
+.museum-directory-page .museum-intro-main,
+.museum-directory-page .museum-intro-side,
+.museum-directory-page .museum-mini-note,
+.museum-directory-page .museum-icon-row i,
+.museum-directory-page .museum-dual-card,
+.museum-directory-page .museum-badge,
+.museum-directory-page .museum-rail-icon,
+.museum-directory-page .museum-rail-btn,
+.museum-directory-page .museum-visual-shell,
+.museum-directory-page .museum-leaf-visual,
+.museum-directory-page .museum-visual-back{
+  border-radius:0!important;
+}
+
+/* Ensure inherited generic .card / .shadow styling never rounds museum cards */
+.museum-directory-page .museum-dual-card.card{
+  border-radius:0!important;
+}
+
+/* No pill language on the museum listing page */
+.museum-directory-page .museum-count-chip,
+.museum-directory-page .museum-badge{
+  border-radius:0!important;
+}
+
+/* True book/page opening composition */
+.museum-directory-page .museum-visual-shell{
+  perspective:1500px!important;
+  transform-style:preserve-3d!important;
+  overflow:hidden!important;
+  isolation:isolate!important;
+}
+
+.museum-directory-page .museum-visual-back{
+  position:absolute!important;
+  inset:0!important;
+  z-index:0!important;
+  overflow:hidden!important;
+  background:#11131b!important;
+}
+.museum-directory-page .museum-visual-back img{
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+  transform:scale(1.015)!important;
+  transition:transform .9s cubic-bezier(.2,.75,.2,1), filter .6s ease!important;
+}
+
+/* First image = the page that opens */
+.museum-directory-page .museum-leaf-visual{
+  position:absolute!important;
+  inset:0!important;
+  z-index:1!important;
+  clip-path:none!important;
+  overflow:hidden!important;
+  opacity:.94!important;
+  box-shadow:none!important;
+  transform-origin:0 50%!important;
+  transform:rotateY(0deg) translateZ(1px)!important;
+  backface-visibility:hidden!important;
+  will-change:transform,opacity!important;
+  transition:
+    transform .95s cubic-bezier(.22,.72,.18,1),
+    opacity .55s ease!important;
+}
+.museum-directory-page .museum-leaf-visual img{
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+  animation:none!important;
+  transform:none!important;
+  transition:transform .9s ease!important;
+}
+
+/* translucent sheet texture / page light */
+.museum-directory-page .museum-leaf-visual::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:2;
+  pointer-events:none;
+  background:
+    linear-gradient(135deg,rgba(255,255,255,.88) 0 18px,rgba(255,255,255,0) 18px) top right/58px 58px no-repeat,
+    linear-gradient(140deg,rgba(255,255,255,.18) 0%,rgba(255,255,255,0) 46%) top right/58px 58px no-repeat,
+    linear-gradient(90deg,rgba(255,255,255,.18) 0%,rgba(255,255,255,.03) 24%,rgba(6,8,14,.04) 72%,rgba(6,8,14,.16) 100%);
+  opacity:.62;
+  transition:opacity .55s ease;
+}
+
+/* folding edge shadow */
+.museum-directory-page .museum-leaf-visual::after{
+  content:"";
+  position:absolute!important;
+  top:0!important;
+  right:0!important;
+  bottom:0!important;
+  left:auto!important;
+  width:24px!important;
+  border:0!important;
+  background:linear-gradient(90deg,transparent,rgba(0,0,0,.24))!important;
+  opacity:.45!important;
+  pointer-events:none!important;
+  transition:opacity .55s ease!important;
+}
+
+.museum-directory-page .museum-visual-shell::before{
+  content:"";
+  position:absolute;
+  top:0;
+  right:0;
+  width:62px;
+  height:62px;
+  z-index:3;
+  pointer-events:none;
+  clip-path:polygon(100% 0,0 0,100% 100%);
+  background:linear-gradient(135deg,rgba(255,255,255,.96),rgba(221,226,241,.88));
+  box-shadow:-1px 1px 0 rgba(17,19,29,.16), -12px 12px 18px rgba(17,19,29,.08);
+  transform:translate(0,0);
+  transition:opacity .55s ease, transform .65s ease;
+}
+
+.museum-directory-page .museum-visual-shell::after{
+  content:"";
+  position:absolute;
+  top:0;
+  right:0;
+  width:62px;
+  height:62px;
+  z-index:3;
+  pointer-events:none;
+  clip-path:polygon(100% 0,26% 0,100% 74%);
+  background:linear-gradient(135deg,rgba(102,108,133,.28),rgba(255,255,255,0));
+}
+
+/* Hover: sheet turns out of the way, rear image is revealed */
+.museum-directory-page .museum-dual-card:hover .museum-leaf-visual{
+  transform:rotateY(-104deg) translateZ(2px)!important;
+  opacity:.12!important;
+  filter:none!important;
+}
+.museum-directory-page .museum-dual-card:hover .museum-leaf-visual::before,
+.museum-directory-page .museum-dual-card:hover .museum-leaf-visual::after,
+.museum-directory-page .museum-dual-card:hover .museum-visual-shell::before,
+.museum-directory-page .museum-dual-card:hover .museum-visual-shell::after{
+  opacity:.08!important;
+}
+.museum-directory-page .museum-dual-card:hover .museum-visual-back img{
+  transform:scale(1.06)!important;
+  filter:saturate(1.05) contrast(1.02)!important;
+}
+
+/* Content remains readable while the page image turns */
+.museum-directory-page .museum-badge,
+.museum-directory-page .museum-visual-copy{
+  z-index:4!important;
+}
+.museum-directory-page .museum-visual-copy{
+  pointer-events:none!important;
+}
+
+/* Sharp action rail */
+.museum-directory-page .museum-rail-actions{
+  border-radius:0!important;
+}
+.museum-directory-page .museum-rail-btn:hover{
+  transform:none!important;
+}
+
+/* Remove decorative rounded blobs from the main museum page composition */
+.museum-directory-page .museum-directory-hero::before,
+.museum-directory-page .museum-directory-hero::after,
+.museum-directory-page .museum-intro-main::after{
+  border-radius:0!important;
+}
+
+/* Mobile: touch-friendly version; first tap hover-capable browsers still reveals rear image */
+@media(max-width:720px){
+  .museum-directory-page .museum-leaf-visual{
+    transform-origin:0 50%!important;
+  }
+  .museum-directory-page .museum-dual-card:hover .museum-leaf-visual{
+    transform:rotateY(-96deg)!important;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .museum-directory-page .museum-leaf-visual{
+    transition:opacity .2s ease!important;
+  }
+  .museum-directory-page .museum-dual-card:hover .museum-leaf-visual{
+    transform:none!important;
+    opacity:0!important;
+  }
+}
+</style>
+<style>
+/* ===== V43 museum card visual tweaks ===== */
+/* remove top-right folded corner effect */
+.museum-directory-page .museum-visual-shell::before,
+.museum-directory-page .museum-visual-shell::after{
+  content:none!important;
+  display:none!important;
+}
+
+/* keep the front image texture, but without the corner-break fold */
+.museum-directory-page .museum-leaf-visual::before{
+  background:linear-gradient(90deg,rgba(255,255,255,.16) 0%,rgba(255,255,255,.04) 24%,rgba(6,8,14,.04) 72%,rgba(6,8,14,.14) 100%)!important;
+  opacity:.48!important;
+}
+
+/* text block hover gradient: emerges from the left side, not the whole image */
+.museum-directory-page .museum-visual-copy{
+  isolation:isolate!important;
+}
+.museum-directory-page .museum-visual-copy::before{
+  content:"";
+  position:absolute;
+  left:-22px;
+  top:-18px;
+  bottom:-18px;
+  width:min(86%,540px);
+  background:linear-gradient(90deg,rgba(0,0,0,.84) 0%,rgba(0,0,0,.72) 44%,rgba(0,0,0,.28) 78%,rgba(0,0,0,0) 100%);
+  opacity:0;
+  transform:translateX(-14px);
+  transition:opacity .38s ease, transform .48s ease;
+  pointer-events:none;
+  z-index:0;
+}
+.museum-directory-page .museum-visual-copy > *{
+  position:relative;
+  z-index:1;
+}
+.museum-directory-page .museum-dual-card:hover .museum-visual-copy::before{
+  opacity:1;
+  transform:translateX(0);
+}
+
+/* mobile: keep the black text gradient fixed behind copy */
+@media (max-width:720px){
+  .museum-directory-page .museum-visual-copy::before{
+    left:-16px!important;
+    right:14%!important;
+    width:auto!important;
+    top:-14px!important;
+    bottom:-14px!important;
+    opacity:1!important;
+    transform:none!important;
+    background:linear-gradient(90deg,rgba(0,0,0,.84) 0%,rgba(0,0,0,.72) 50%,rgba(0,0,0,.3) 82%,rgba(0,0,0,0) 100%)!important;
+  }
+}
+
+@media (max-width:520px){
+  .museum-directory-page .museum-visual-copy::before{
+    right:10%!important;
+  }
+}
+</style>
+<style>
+/* ===== V45 intro width + colorful action rail ===== */
+
+/* Let the right intro card run all the way to the container edge */
+.museum-directory-page .museum-intro-grid{
+  grid-template-columns:400px minmax(0,1fr)!important;
+  width:100%!important;
+}
+.museum-directory-page .museum-intro-side-wrap{
+  width:100%!important;
+  min-width:0!important;
+  align-self:stretch!important;
+  display:flex!important;
+  align-items:center!important;
+}
+.museum-directory-page .museum-intro-side{
+  width:calc(100% + 64px)!important;
+  max-width:none!important;
+  min-width:0!important;
+  margin-left:-64px!important;
+  margin-right:0!important;
+  align-self:center!important;
+  box-sizing:border-box!important;
+}
+
+/* Color-coded action rail - lighter tones with black content */
+.museum-directory-page .museum-rail-btn:nth-child(1){
+  background:#eee9ff!important;
+  color:#11131b!important;
+  border-color:#ddd3ff!important;
+}
+.museum-directory-page .museum-rail-btn:nth-child(1) .museum-rail-icon{
+  background:#ded4ff!important;
+  color:#11131b!important;
+}
+.museum-directory-page .museum-rail-btn:nth-child(1) .museum-rail-text small{
+  color:#56505f!important;
+}
+
+.museum-directory-page .museum-rail-btn:nth-child(2){
+  background:#e4f7f6!important;
+  color:#11131b!important;
+  border-color:#ccebea!important;
+}
+.museum-directory-page .museum-rail-btn:nth-child(2) .museum-rail-icon{
+  background:#c9eeec!important;
+  color:#11131b!important;
+}
+.museum-directory-page .museum-rail-btn:nth-child(2) .museum-rail-text small{
+  color:#4f5f60!important;
+}
+
+.museum-directory-page .museum-rail-btn:nth-child(3){
+  background:#fff5c7!important;
+  color:#11131b!important;
+  border-color:#f4e6a5!important;
+}
+.museum-directory-page .museum-rail-btn:nth-child(3) .museum-rail-icon{
+  background:#f9e9a6!important;
+  color:#11131b!important;
+}
+.museum-directory-page .museum-rail-btn:nth-child(3) .museum-rail-text small{
+  color:#615a37!important;
+}
+
+/* Hover keeps the light color identity while adding contrast */
+.museum-directory-page .museum-rail-btn:nth-child(1):hover{
+  background:#e1d8ff!important;
+  color:#11131b!important;
+}
+.museum-directory-page .museum-rail-btn:nth-child(2):hover{
+  background:#d3f1ef!important;
+  color:#11131b!important;
+}
+.museum-directory-page .museum-rail-btn:nth-child(3):hover{
+  background:#ffedaa!important;
+  color:#11131b!important;
+}
+.museum-directory-page .museum-rail-btn:hover .museum-rail-icon{
+  transform:translateY(-1px)!important;
+  color:#11131b!important;
+}
+.museum-directory-page .museum-rail-btn > i:last-child{
+  color:#11131b!important;
+}
+
+@media(max-width:1100px){
+  .museum-directory-page .museum-intro-side{
+    width:100%!important;
+    margin-left:0!important;
+  }
+}
+</style>
+<style>
+/* ===== V51 museum listing cleanup ===== */
+.museum-directory-page .museum-rail-actions{background:#fbfbfd!important}
+.museum-directory-page .museum-rail-btn,
+.museum-directory-page .museum-rail-btn:nth-child(1),
+.museum-directory-page .museum-rail-btn:nth-child(2),
+.museum-directory-page .museum-rail-btn:nth-child(3){
+  background:#fff!important;
+  color:#11131b!important;
+  border-color:#eceef4!important;
+}
+.museum-directory-page .museum-rail-btn .museum-rail-icon,
+.museum-directory-page .museum-rail-btn:nth-child(1) .museum-rail-icon,
+.museum-directory-page .museum-rail-btn:nth-child(2) .museum-rail-icon,
+.museum-directory-page .museum-rail-btn:nth-child(3) .museum-rail-icon{
+  background:#f1f3f9!important;
+  color:#11131b!important;
+}
+.museum-directory-page .museum-rail-btn .museum-rail-text small,
+.museum-directory-page .museum-rail-btn > i:last-child{color:#5e6575!important}
+.museum-directory-page .museum-rail-btn:hover{background:#11131d!important;color:#fff!important}
+.museum-directory-page .museum-rail-btn:hover .museum-rail-icon{background:#fff!important;color:#11131b!important}
+.museum-directory-page .museum-rail-btn:hover .museum-rail-text small,
+.museum-directory-page .museum-rail-btn:hover > i:last-child{color:#cad0df!important}
+</style>
+</head>
+<body class="app-body museum-directory-page">
+<div id="commonHeader"></div>
+<section class="museum-directory-hero">
+<div class="container">
+
+<div class="museum-directory-title-row">
+<div>
+<span class="kicker">BURSA MÜZE KOLEKSİYONU</span>
+<h1>Şehrin yaşayan hafızasını 13 durakta keşfedin.</h1>
+<p>BursaMüze koleksiyonundaki müzeler; kentin tarihini, gündelik yaşamını, sanayi mirasını, göç öykülerini ve kültürel birikimini tek bir rota altında ziyaretçileriyle buluşturur.</p>
+</div>
+<div class="museum-count-chip"><i class="bi bi-building"></i> <span>Toplam Müze</span> <b>13</b></div>
+</div>
+</div>
+</section>
+<section class="museum-intro-section">
+<div class="container">
+<div class="museum-intro-grid">
+<article class="museum-intro-main shadow" data-motion="">
+<div>
+<span class="kicker">GENEL TANITIM</span>
+<h2>Müzelerimiz Hakkında</h2>
+<p>Bursa, tarih öncesinden Osmanlı'ya ve Cumhuriyet dönemine uzanan çok katmanlı yapısıyla yaşayan bir müze şehir niteliği taşır. BursaMüze çatısı altındaki duraklar; ziyaret, eğitim, atölye ve etkinlik deneyimini çağdaş bir kurgu ile bir araya getirir.</p>
+</div>
+<div class="museum-mini-note">
+<i class="bi bi-geo-alt"></i>
+<span>Her müze kartı üzerinden müzeyi inceleyebilir, ziyaret planınızı oluşturabilir ve ilgili etkinlik programlarına hızlıca ulaşabilirsiniz.</span>
+</div>
+</article>
+<div class="museum-intro-side-wrap" data-motion="">
+<article class="museum-intro-side">
+<h3>Planlı, erişilebilir ve zengin bir müze deneyimi.</h3>
+<p>Ziyaretçilerin farklı ilgi alanlarına göre kendi kültür rotalarını oluşturabilmeleri için müze içerikleri, etkinlik bağlantıları ve yönlendirme aksiyonları tek sayfada şık bir düzende sunulur.</p>
+<div class="museum-icon-article">
+<div class="museum-icon-row">
+<i class="bi bi-signpost-split"></i>
+<div>
+<h4>Tek noktadan kültür rotası</h4>
+<p>Kent, sanayi, gölge oyunu, el yazmaları ve açık hava müzeciliğini birlikte keşfedin.</p>
+</div>
+</div>
+<div class="museum-icon-row">
+<i class="bi bi-calendar2-check"></i>
+<div>
+<h4>Ziyaret ve program ilişkisi</h4>
+<p>Her müze için etkinlik programına tek tıkla ulaşın; deneyimi yalnızca bilgiyle sınırlamayın.</p>
+</div>
+</div>
+<div class="museum-icon-row">
+<i class="bi bi-universal-access"></i>
+<div>
+<h4>Kullanıcı odaklı deneyim</h4>
+<p>Geniş görsel alanlar, güçlü butonlar ve sezgisel akış sayesinde hızlı karar verin.</p>
+</div>
+</div>
+</div>
+</article>
+</div>
+</div>
+</div>
+</section>
+<section class="museum-directory-listing">
+<div class="container">
+<div class="museum-directory-list-head">
+<div>
+<span class="kicker">MÜZE LİSTELEME</span>
+<h2>BursaMüze durakları</h2>
+</div>
+</div>
+<div class="museum-directory-grid">
+<article class="museum-dual-card card shadow" data-motion="">
+<div class="museum-visual-shell">
+<div class="museum-visual-back">
+<img alt="Bursa Mevlevihanesi ve Müzesi" loading="lazy" src="https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?auto=format&amp;fit=crop&amp;w=1400&amp;q=80"/>
+</div>
+<div class="museum-leaf-visual">
+<img alt="Bursa Mevlevihanesi ve Müzesi" loading="lazy" src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&amp;fit=crop&amp;w=1400&amp;q=80"/>
+</div>
+<span class="museum-badge">OSMANGAZİ</span>
+<div class="museum-visual-copy">
+<small>MÜZE ROTASI</small>
+<h3>Bursa Mevlevihanesi ve Müzesi</h3>
+<p>Tasavvuf kültürü, sema geleneği ve tarihi doku ile sakin bir keşif rotası.</p>
+</div>
+</div>
+<div class="museum-rail-actions">
+<a class="museum-rail-btn" href="muze-detay.html">
+<span class="museum-rail-icon"><i class="bi bi-building"></i></span>
+<span class="museum-rail-text"><small>DETAY</small><b>Müzeyi İncele</b></span>
+<i class="bi bi-arrow-up-right-circle"></i>
+</a>
+<a class="museum-rail-btn" href="sanal-sergiler.html">
+<span class="museum-rail-icon"><i class="bi bi-badge-3d"></i></span>
+<span class="museum-rail-text"><small>360 PANORAMA</small><b>Sanal Müze</b></span>
+<i class="bi bi-arrow-up-right-circle"></i>
+</a>
+<a class="museum-rail-btn" href="etkinlikler.html?muze=Bursa Mevlevihanesi ve Müzesi">
+<span class="museum-rail-icon"><i class="bi bi-stars"></i></span>
+<span class="museum-rail-text"><small>PROGRAM</small><b>Etkinlikleri Gör</b></span>
+<i class="bi bi-arrow-up-right-circle"></i>
+</a>
+</div>
+</article>
+<article class="museum-dual-card card shadow" data-motion="">
+<div class="museum-visual-shell">
+<div class="museum-visual-back">
+<img alt="Bursa Bıçak Müzesi" loading="lazy" src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&amp;fit=crop&amp;w=1400&amp;q=80"/>
+</div>
+<div class="museum-leaf-visual">
+<img alt="Bursa Bıçak Müzesi" loading="lazy" src="https://images.unsplash.com/photo-1541961017774-22349e4a1262?auto=format&amp;fit=crop&amp;w=1400&amp;q=80"/>
+</div>
+<span class="museum-badge">BALİBEYHAN</span>
+<div class="museum-visual-copy">
+<small>MÜZE ROTASI</small>
+<h3>Bursa Bıçak Müzesi</h3>
+<p>Bursa bıçağının ustalık hikâyesini çağdaş sunumlarla deneyimleyin.</p>
+</div>
+</div>
+<div class="museum-rail-actions">
+<a class="museum-rail-btn" href="muze-detay.html">
+<span class="museum-rail-icon"><i class="bi bi-building"></i></span>
+<span class="museum-rail-text"><small>DETAY</small><b>Müzeyi İncele</b></span>
+<i class="bi bi-arrow-up-right-circle"></i>
+</a>
+<a class="museum-rail-btn" href="sanal-sergiler.html">
+<span class="museum-rail-icon"><i class="bi bi-badge-3d"></i></span>
+<span class="museum-rail-text"><small>360 PANORAMA</small><b>Sanal Müze</b></span>
+<i class="bi bi-arrow-up-right-circle"></i>
+</a>
+<a class="museum-rail-btn" href="etkinlikler.html?muze=Bursa Bıçak Müzesi">
+<span class="museum-rail-icon"><i class="bi bi-stars"></i></span>
+<span class="museum-rail-text"><small>PROGRAM</small><b>Etkinlikleri Gör</b></span>
+<i class="bi bi-arrow-up-right-circle"></i>
+</a>
+</div>
+</article>
+<article class="museum-dual-card card shadow" data-motion="">
+<div class="museum-visual-shell">
+<div class="museum-visual-back">
+<img alt="Bursa Kent Müzesi" loading="lazy" src="https://images.unsplash.com/photo-1561214115-f2f134cc4912?auto=format&amp;fit=crop&amp;w=1400&amp;q=80"/>
+</div>
+<div class="museum-leaf-visual">
+<img alt="Bursa Kent Müzesi" loading="lazy" src="https://www.osmangazi.bel.tr/storage/app/media/projeler/panorama-1326-bursa-fetih-muzesi-18/dji-0067.jpg"/>
+</div>
+<span class="museum-badge">HEYKEL</span>
+<div class="museum-visual-copy">
+<small>MÜZE ROTASI</small>
+<h3>Bursa Kent Müzesi</h3>
+<p>Kentin hafızasını dönemler boyunca izleyebileceğiniz ana kent rotası.</p>
+</div>
+</div>
+<div class="museum-rail-actions">
+<a class="museum-rail-btn" href="muze-detay.html">
+<span class="museum-rail-icon"><i class="bi bi-building"></i></span>
+<span class="museum-rail-text"><small>DETAY</small><b>Müzeyi İncele</b></span>
+<i class="bi bi-arrow-up-right-circle"></i>
+</a>
+<a class="museum-rail-btn" href="sanal-sergiler.html">
+<span class="museum-rail-icon"><i class="bi bi-badge-3d"></i></span>
+<span class="museum-rail-text"><small>360 PANORAMA</small><b>Sanal Müze</b></span>
+<i class="bi bi-arrow-up-right-circle"></i>
+</a>
+<a class="museum-rail-btn" href="etkinlikler.html?muze=Bursa Kent Müzesi">
+<span class="museum-rail-icon"><i class="bi bi-stars"></i></span>
+<span class="museum-rail-text"><small>PROGRAM</small><b>Etkinlikleri Gör</b></span>
+<i class="bi bi-arrow-up-right-circle"></i>
+</a>
+</div>
+</article>
+<article class="museum-dual-card card shadow" data-motion="">
+<div class="museum-visual-shell">
+<div class="museum-visual-back">
+<img alt="Karagöz Müzesi" loading="lazy" src="https://images.unsplash.com/photo-1529429617124-aee711a5ac1c?auto=format&amp;fit=crop&amp;w=1400&amp;q=80"/>
+</div>
+<div class="museum-leaf-visual">
+<img alt="Karagöz Müzesi" loading="lazy" src="assets/images/kukla-karagoz-bulusmasi-2026.png"/>
+</div>
+<span class="museum-badge">ÇEKİRGE</span>
+<div class="museum-visual-copy">
+<small>MÜZE ROTASI</small>
+<h3>Karagöz Müzesi</h3>
+<p>Gölge oyununun yaşayan mirasını çocuklar ve aileler için keşfedin.</p>
+</div>
+</div>
+<div class="museum-rail-actions">
+<a class="museum-rail-btn" href="muze-detay.html">
+<span class="museum-rail-icon"><i class="bi bi-building"></i></span>
+<span class="museum-rail-text"><small>DETAY</small><b>Müzeyi İncele</b></span>
+<i class="bi bi-arrow-up-right-circle"></i>
+</a>
+<a class="museum-rail-btn" href="sanal-sergiler.html">
+<span class="museum-rail-icon"><i class="bi bi-badge-3d"></i></span>
+<span class="museum-rail-text"><small>360 PANORAMA</small><b>Sanal Müze</b></span>
+<i class="bi bi-arrow-up-right-circle"></i>
+</a>
+<a class="museum-rail-btn" href="etkinlikler.html?muze=Karagöz Müzesi">
+<span class="museum-rail-icon"><i class="bi bi-stars"></i></span>
+<span class="museum-rail-text"><small>PROGRAM</small><b>Etkinlikleri Gör</b></span>
+<i class="bi bi-arrow-up-right-circle"></i>
+</a>
+</div>
+</article>
+<article class="museum-dual-card card shadow" data-motion="">
+<div class="museum-visual-shell">
+<div class="museum-visual-back">
+<img alt="Bursa Göç Tarihi Müzesi" loading="lazy" src="https://images.unsplash.com/photo-1518998053901-5348d3961a04?auto=format&amp;fit=crop&amp;w=1400&amp;q=80"/>
+</div>
+<div class="museum-leaf-visual">
+<img alt="Bursa Göç Tarihi Müzesi" loading="lazy" src="https://images.unsplash.com/photo-1564399579883-451a5d44ec08?auto=format&amp;fit=crop&amp;w=1400&amp;q=80"/>
+</div>
+<span class="museum-badge">MERİNOS</span>
+<div class="museum-visual-copy">
+<small>MÜZE ROTASI</small>
+<h3>Bursa Göç Tarihi Müzesi</h3>
+<p>Göçün şehir belleğine bıraktığı izleri katmanlı bir anlatımla görün.</p>
+</div>
+</div>
+<div class="museum-rail-actions">
+<a class="museum-rail-btn" href="muze-detay.html">
+<span class="museum-rail-icon"><i class="bi bi-building"></i></span>
+<span class="museum-rail-text"><small>DETAY</small><b>Müzeyi İncele</b></span>
+<i class="bi bi-arrow-up-right-circle"></i>
+</a>
+<a class="museum-rail-btn" href="sanal-sergiler.html">
+<span class="museum-rail-icon"><i class="bi bi-badge-3d"></i></span>
+<span class="museum-rail-text"><small>360 PANORAMA</small><b>Sanal Müze</b></span>
+<i class="bi bi-arrow-up-right-circle"></i>
+</a>
+<a class="museum-rail-btn" href="etkinlikler.html?muze=Bursa Göç Tarihi Müzesi">
+<span class="museum-rail-icon"><i class="bi bi-stars"></i></span>
+<span class="museum-rail-text"><small>PROGRAM</small><b>Etkinlikleri Gör</b></span>
+<i class="bi bi-arrow-up-right-circle"></i>
+</a>
+</div>
+</article>
+<article class="museum-dual-card card shadow" data-motion="">
+<div class="museum-visual-shell">
+<div class="museum-visual-back">
+<img alt="Hünkar Köşkü Müzesi" loading="lazy" src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&amp;fit=crop&amp;w=1400&amp;q=80"/>
+</div>
+<div class="museum-leaf-visual">
+<img alt="Hünkar Köşkü Müzesi" loading="lazy" src="https://images.unsplash.com/photo-1491156855053-9cdff72c7f85?auto=format&amp;fit=crop&amp;w=1400&amp;q=80"/>
+</div>
+<span class="museum-badge">YILDIRIM</span>
+<div class="museum-visual-copy">
+<small>MÜZE ROTASI</small>
+<h3>Hünkar Köşkü Müzesi</h3>
+<p>Osmanlı konut geleneğini ve saray yaşantısını zarif detaylarla yaşayın.</p>
+</div>
+</div>
+<div class="museum-rail-actions">
+<a class="museum-rail-btn" href="muze-detay.html">
+<span class="museum-rail-icon"><i class="bi bi-building"></i></span>
+<span class="museum-rail-text"><small>DETAY</small><b>Müzeyi İncele</b></span>
+<i class="bi bi-arrow-up-right-circle"></i>
+</a>
+<a class="museum-rail-btn" href="sanal-sergiler.html">
+<span class="museum-rail-icon"><i class="bi bi-badge-3d"></i></span>
+<span class="museum-rail-text"><small>360 PANORAMA</small><b>Sanal Müze</b></span>
+<i class="bi bi-arrow-up-right-circle"></i>
+</a>
+<a class="museum-rail-btn" href="etkinlikler.html?muze=Hünkar Köşkü Müzesi">
+<span class="museum-rail-icon"><i class="bi bi-stars"></i></span>
+<span class="museum-rail-text"><small>PROGRAM</small><b>Etkinlikleri Gör</b></span>
+<i class="bi bi-arrow-up-right-circle"></i>
+</a>
+</div>
+</article>
+<article class="museum-dual-card card shadow" data-motion="">
+<div class="museum-visual-shell">
+<div class="museum-visual-back">
+<img alt="Merinos Enerji Müzesi" loading="lazy" src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&amp;fit=crop&amp;w=1400&amp;q=80"/>
+</div>
+<div class="museum-leaf-visual">
+<img alt="Merinos Enerji Müzesi" loading="lazy" src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&amp;fit=crop&amp;w=1400&amp;q=80"/>
+</div>
+<span class="museum-badge">MERİNOS</span>
+<div class="museum-visual-copy">
+<small>MÜZE ROTASI</small>
+<h3>Merinos Enerji Müzesi</h3>
+<p>Sanayi ve enerji tarihini etkileyici mekan kurgusuyla bir araya getirir.</p>
+</div>
+</div>
+<div class="museum-rail-actions">
+<a class="museum-rail-btn" href="muze-detay.html">
+<span class="museum-rail-icon"><i class="bi bi-building"></i></span>
+<span class="museum-rail-text"><small>DETAY</small><b>Müzeyi İncele</b></span>
+<i class="bi bi-arrow-up-right-circle"></i>
+</a>
+<a class="museum-rail-btn" href="sanal-sergiler.html">
+<span class="museum-rail-icon"><i class="bi bi-badge-3d"></i></span>
+<span class="museum-rail-text"><small>360 PANORAMA</small><b>Sanal Müze</b></span>
+<i class="bi bi-arrow-up-right-circle"></i>
+</a>
+<a class="museum-rail-btn" href="etkinlikler.html?muze=Merinos Enerji Müzesi">
+<span class="museum-rail-icon"><i class="bi bi-stars"></i></span>
+<span class="museum-rail-text"><small>PROGRAM</small><b>Etkinlikleri Gör</b></span>
+<i class="bi bi-arrow-up-right-circle"></i>
+</a>
+</div>
+</article>
+<article class="museum-dual-card card shadow" data-motion="">
+<div class="museum-visual-shell">
+<div class="museum-visual-back">
+<img alt="Muradiye El Yazmaları Müzesi" loading="lazy" src="https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&amp;fit=crop&amp;w=1400&amp;q=80"/>
+</div>
+<div class="museum-leaf-visual">
+<img alt="Muradiye El Yazmaları Müzesi" loading="lazy" src="https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&amp;fit=crop&amp;w=1400&amp;q=80"/>
+</div>
+<span class="museum-badge">MURADİYE</span>
+<div class="museum-visual-copy">
+<small>MÜZE ROTASI</small>
+<h3>Muradiye El Yazmaları Müzesi</h3>
+<p>Nadir eserler, hat geleneği ve yazma kültürü tek bir durakta buluşur.</p>
+</div>
+</div>
+<div class="museum-rail-actions">
+<a class="museum-rail-btn" href="muze-detay.html">
+<span class="museum-rail-icon"><i class="bi bi-building"></i></span>
+<span class="museum-rail-text"><small>DETAY</small><b>Müzeyi İncele</b></span>
+<i class="bi bi-arrow-up-right-circle"></i>
+</a>
+<a class="museum-rail-btn" href="sanal-sergiler.html">
+<span class="museum-rail-icon"><i class="bi bi-badge-3d"></i></span>
+<span class="museum-rail-text"><small>360 PANORAMA</small><b>Sanal Müze</b></span>
+<i class="bi bi-arrow-up-right-circle"></i>
+</a>
+<a class="museum-rail-btn" href="etkinlikler.html?muze=Muradiye El Yazmaları Müzesi">
+<span class="museum-rail-icon"><i class="bi bi-stars"></i></span>
+<span class="museum-rail-text"><small>PROGRAM</small><b>Etkinlikleri Gör</b></span>
+<i class="bi bi-arrow-up-right-circle"></i>
+</a>
+</div>
+</article>
+<article class="museum-dual-card card shadow" data-motion="">
+<div class="museum-visual-shell">
+<div class="museum-visual-back">
+<img alt="Zindan Kapı" loading="lazy" src="https://images.unsplash.com/photo-1518998053901-5348d3961a04?auto=format&amp;fit=crop&amp;w=1400&amp;q=80"/>
+</div>
+<div class="museum-leaf-visual">
+<img alt="Zindan Kapı" loading="lazy" src="https://images.unsplash.com/photo-1520637836862-4d197d17c55a?auto=format&amp;fit=crop&amp;w=1400&amp;q=80"/>
+</div>
+<span class="museum-badge">HİSAR</span>
+<div class="museum-visual-copy">
+<small>MÜZE ROTASI</small>
+<h3>Zindan Kapı</h3>
+<p>Tarihi savunma yapısını güncel sanat ve etkinlik programlarıyla keşfedin.</p>
+</div>
+</div>
+<div class="museum-rail-actions">
+<a class="museum-rail-btn" href="muze-detay.html">
+<span class="museum-rail-icon"><i class="bi bi-building"></i></span>
+<span class="museum-rail-text"><small>DETAY</small><b>Müzeyi İncele</b></span>
+<i class="bi bi-arrow-up-right-circle"></i>
+</a>
+<a class="museum-rail-btn" href="sanal-sergiler.html">
+<span class="museum-rail-icon"><i class="bi bi-badge-3d"></i></span>
+<span class="museum-rail-text"><small>360 PANORAMA</small><b>Sanal Müze</b></span>
+<i class="bi bi-arrow-up-right-circle"></i>
+</a>
+<a class="museum-rail-btn" href="etkinlikler.html?muze=Zindan Kapı">
+<span class="museum-rail-icon"><i class="bi bi-stars"></i></span>
+<span class="museum-rail-text"><small>PROGRAM</small><b>Etkinlikleri Gör</b></span>
+<i class="bi bi-arrow-up-right-circle"></i>
+</a>
+</div>
+</article>
+<article class="museum-dual-card card shadow" data-motion="">
+<div class="museum-visual-shell">
+<div class="museum-visual-back">
+<img alt="Arkeopark Açık Hava Müzesi" loading="lazy" src="https://images.unsplash.com/photo-1524499982521-1ffd58dd89ea?auto=format&amp;fit=crop&amp;w=1400&amp;q=80"/>
+</div>
+<div class="museum-leaf-visual">
+<img alt="Arkeopark Açık Hava Müzesi" loading="lazy" src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&amp;fit=crop&amp;w=1400&amp;q=80"/>
+</div>
+<span class="museum-badge">NİLÜFER</span>
+<div class="museum-visual-copy">
+<small>MÜZE ROTASI</small>
+<h3>Arkeopark Açık Hava Müzesi</h3>
+<p>Açık havada arkeoloji, yerleşim izleri ve deneyim odaklı keşif alanı.</p>
+</div>
+</div>
+<div class="museum-rail-actions">
+<a class="museum-rail-btn" href="muze-detay.html">
+<span class="museum-rail-icon"><i class="bi bi-building"></i></span>
+<span class="museum-rail-text"><small>DETAY</small><b>Müzeyi İncele</b></span>
+<i class="bi bi-arrow-up-right-circle"></i>
+</a>
+<a class="museum-rail-btn" href="sanal-sergiler.html">
+<span class="museum-rail-icon"><i class="bi bi-badge-3d"></i></span>
+<span class="museum-rail-text"><small>360 PANORAMA</small><b>Sanal Müze</b></span>
+<i class="bi bi-arrow-up-right-circle"></i>
+</a>
+<a class="museum-rail-btn" href="etkinlikler.html?muze=Arkeopark Açık Hava Müzesi">
+<span class="museum-rail-icon"><i class="bi bi-stars"></i></span>
+<span class="museum-rail-text"><small>PROGRAM</small><b>Etkinlikleri Gör</b></span>
+<i class="bi bi-arrow-up-right-circle"></i>
+</a>
+</div>
+</article>
+<article class="museum-dual-card card shadow" data-motion="">
+<div class="museum-visual-shell">
+<div class="museum-visual-back">
+<img alt="Merinos Tekstil Sanayi Müzesi" loading="lazy" src="https://images.unsplash.com/photo-1565789218091-ad61cfc6e2d9?auto=format&amp;fit=crop&amp;w=1400&amp;q=80"/>
+</div>
+<div class="museum-leaf-visual">
+<img alt="Merinos Tekstil Sanayi Müzesi" loading="lazy" src="https://images.unsplash.com/photo-1529429617124-aee711a5ac1c?auto=format&amp;fit=crop&amp;w=1400&amp;q=80"/>
+</div>
+<span class="museum-badge">MERİNOS</span>
+<div class="museum-visual-copy">
+<small>MÜZE ROTASI</small>
+<h3>Merinos Tekstil Sanayi Müzesi</h3>
+<p>Tekstil üretiminin kent belleğindeki izlerini güçlü görsel anlatımla sunar.</p>
+</div>
+</div>
+<div class="museum-rail-actions">
+<a class="museum-rail-btn" href="muze-detay.html">
+<span class="museum-rail-icon"><i class="bi bi-building"></i></span>
+<span class="museum-rail-text"><small>DETAY</small><b>Müzeyi İncele</b></span>
+<i class="bi bi-arrow-up-right-circle"></i>
+</a>
+<a class="museum-rail-btn" href="sanal-sergiler.html">
+<span class="museum-rail-icon"><i class="bi bi-badge-3d"></i></span>
+<span class="museum-rail-text"><small>360 PANORAMA</small><b>Sanal Müze</b></span>
+<i class="bi bi-arrow-up-right-circle"></i>
+</a>
+<a class="museum-rail-btn" href="etkinlikler.html?muze=Merinos Tekstil Sanayi Müzesi">
+<span class="museum-rail-icon"><i class="bi bi-stars"></i></span>
+<span class="museum-rail-text"><small>PROGRAM</small><b>Etkinlikleri Gör</b></span>
+<i class="bi bi-arrow-up-right-circle"></i>
+</a>
+</div>
+</article>
+<article class="museum-dual-card card shadow" data-motion="">
+<div class="museum-visual-shell">
+<div class="museum-visual-back">
+<img alt="Bursa Yaşam Kültürü Müzesi" loading="lazy" src="https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&amp;fit=crop&amp;w=1400&amp;q=80"/>
+</div>
+<div class="museum-leaf-visual">
+<img alt="Bursa Yaşam Kültürü Müzesi" loading="lazy" src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&amp;fit=crop&amp;w=1400&amp;q=80"/>
+</div>
+<span class="museum-badge">BURSA MERKEZ</span>
+<div class="museum-visual-copy">
+<small>MÜZE ROTASI</small>
+<h3>Bursa Yaşam Kültürü Müzesi</h3>
+<p>Gündelik yaşama, geleneklere ve şehrin sosyal hafızasına odaklanan rota.</p>
+</div>
+</div>
+<div class="museum-rail-actions">
+<a class="museum-rail-btn" href="muze-detay.html">
+<span class="museum-rail-icon"><i class="bi bi-building"></i></span>
+<span class="museum-rail-text"><small>DETAY</small><b>Müzeyi İncele</b></span>
+<i class="bi bi-arrow-up-right-circle"></i>
+</a>
+<a class="museum-rail-btn" href="sanal-sergiler.html">
+<span class="museum-rail-icon"><i class="bi bi-badge-3d"></i></span>
+<span class="museum-rail-text"><small>360 PANORAMA</small><b>Sanal Müze</b></span>
+<i class="bi bi-arrow-up-right-circle"></i>
+</a>
+<a class="museum-rail-btn" href="etkinlikler.html?muze=Bursa Yaşam Kültürü Müzesi">
+<span class="museum-rail-icon"><i class="bi bi-stars"></i></span>
+<span class="museum-rail-text"><small>PROGRAM</small><b>Etkinlikleri Gör</b></span>
+<i class="bi bi-arrow-up-right-circle"></i>
+</a>
+</div>
+</article>
+<article class="museum-dual-card card shadow" data-motion="">
+<div class="museum-visual-shell">
+<div class="museum-visual-back">
+<img alt="Bursa Vakıf Kültürü Müzesi" loading="lazy" src="https://images.unsplash.com/photo-1491156855053-9cdff72c7f85?auto=format&amp;fit=crop&amp;w=1400&amp;q=80"/>
+</div>
+<div class="museum-leaf-visual">
+<img alt="Bursa Vakıf Kültürü Müzesi" loading="lazy" src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&amp;fit=crop&amp;w=1400&amp;q=80"/>
+</div>
+<span class="museum-badge">BURSA MERKEZ</span>
+<div class="museum-visual-copy">
+<small>MÜZE ROTASI</small>
+<h3>Bursa Vakıf Kültürü Müzesi</h3>
+<p>Vakıf medeniyetinin sosyal, kültürel ve mimari zenginliğini yansıtır.</p>
+</div>
+</div>
+<div class="museum-rail-actions">
+<a class="museum-rail-btn" href="muze-detay.html">
+<span class="museum-rail-icon"><i class="bi bi-building"></i></span>
+<span class="museum-rail-text"><small>DETAY</small><b>Müzeyi İncele</b></span>
+<i class="bi bi-arrow-up-right-circle"></i>
+</a>
+<a class="museum-rail-btn" href="sanal-sergiler.html">
+<span class="museum-rail-icon"><i class="bi bi-badge-3d"></i></span>
+<span class="museum-rail-text"><small>360 PANORAMA</small><b>Sanal Müze</b></span>
+<i class="bi bi-arrow-up-right-circle"></i>
+</a>
+<a class="museum-rail-btn" href="etkinlikler.html?muze=Bursa Vakıf Kültürü Müzesi">
+<span class="museum-rail-icon"><i class="bi bi-stars"></i></span>
+<span class="museum-rail-text"><small>PROGRAM</small><b>Etkinlikleri Gör</b></span>
+<i class="bi bi-arrow-up-right-circle"></i>
+</a>
+</div>
+</article>
+</div>
+</div>
+</section>
+<div id="commonFooter"></div>
+<script defer="" src="assets/js/common-layout.js"></script>
+<script defer="" src="assets/js/site.js"></script>
+<script src="assets/js/motion.js" type="module"></script>
+</body>
+</html>

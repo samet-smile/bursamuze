@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+
+<html lang="tr">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
+<meta content="#10121c" name="theme-color"/>
+<meta content="Merinos Tekstil Sanayi Müzesi detay, galeri, etkinlikler, haberler ve ulaşım bilgileri." name="description"/>
+<title>Merinos Tekstil Sanayi Müzesi | BursaMüze</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+<link href="assets/css/site.css" rel="stylesheet"/>
+<style>
+    body.museum-detail-clean{background:#f3f4f7;color:#11131b}
+    .museum-detail-clean *{box-sizing:border-box}
+    .museum-detail-clean .container-xl{width:min(1320px,calc(100% - 48px));margin:0 auto}
+
+    /* breadcrumb */
+    .museum-detail-breadcrumb{
+      height:50px;
+      margin-top:88px;
+      background:#fff;
+      border-bottom:1px solid #e2e5eb;
+    }
+    .museum-detail-breadcrumb .container-xl{
+      height:50px;
+      display:flex;
+      align-items:center;
+      justify-content:flex-start;
+      gap:9px;
+      font-size:10px;
+      font-weight:800;
+      letter-spacing:.45px;
+      text-transform:uppercase;
+      color:#747a87;
+      white-space:nowrap;
+      overflow:hidden;
+    }
+    .museum-detail-breadcrumb a{color:#11131b}
+    .museum-detail-breadcrumb i{font-size:12px;color:#6f4cff}
+
+    /* hero */
+    .museum-detail-hero{padding:24px 0 28px;background:#f3f4f7}
+    .museum-detail-hero-grid{
+      display:grid;
+      grid-template-columns:minmax(0,1.15fr) minmax(390px,.85fr);
+      border:1px solid #dfe2e8;
+      background:#fff;
+      min-height:560px;
+    }
+    .museum-detail-visual{
+      position:relative;
+      min-height:560px;
+      overflow:hidden;
+      background:#11131b;
+      border-right:1px solid #dfe2e8;
+    }
+    .museum-detail-visual img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      position:absolute;
+      inset:0;
+      transition:transform .7s ease;
+    }
+    .museum-detail-visual:hover img{transform:scale(1.025)}
+    .museum-detail-visual::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(180deg,rgba(9,11,18,.03) 30%,rgba(9,11,18,.78) 100%);
+    }
+    .museum-detail-photo-meta{
+      position:absolute;
+      z-index:2;
+      left:22px;
+      right:22px;
+      bottom:20px;
+      display:flex;
+      justify-content:space-between;
+      align-items:end;
+      gap:16px;
+      color:#fff;
+    }
+    .museum-detail-photo-meta small{
+      display:block;
+      margin-bottom:5px;
+      font-size:9px;
+      font-weight:900;
+      letter-spacing:1.2px;
+      color:#f5db3f;
+    }
+    .museum-detail-photo-meta strong{font-size:14px}
+    .museum-detail-photo-count{
+      min-width:92px;
+      padding:10px 12px;
+      background:rgba(17,19,29,.72);
+      border:1px solid rgba(255,255,255,.25);
+      font-size:10px;
+      font-weight:800;
+      text-align:center;
+      backdrop-filter:blur(8px);
+    }
+
+    .museum-detail-summary{
+      padding:30px;
+      display:flex;
+      flex-direction:column;
+      min-width:0;
+    }
+    .museum-detail-type{
+      align-self:flex-start;
+      padding:8px 10px;
+      background:#11131b;
+      color:#fff;
+      font-size:9px;
+      font-weight:900;
+      letter-spacing:1px;
+      text-transform:uppercase;
+    }
+    .museum-detail-summary h1{
+      margin:16px 0 12px;
+      font-size:clamp(36px,3.4vw,56px);
+      line-height:.96;
+      letter-spacing:-2.8px;
+    }
+    .museum-detail-lead{
+      margin:0;
+      color:#6c7280;
+      font-size:13px;
+      line-height:1.8;
+    }
+    .museum-visit-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      margin-top:24px;
+      border-top:1px solid #e3e6eb;
+      border-left:1px solid #e3e6eb;
+    }
+    .museum-visit-item{
+      min-height:90px;
+      padding:15px;
+      border-right:1px solid #e3e6eb;
+      border-bottom:1px solid #e3e6eb;
+      display:grid;
+      grid-template-columns:34px minmax(0,1fr);
+      gap:10px;
+      align-items:center;
+    }
+    .museum-visit-item i{
+      width:34px;height:34px;
+      display:grid;place-items:center;
+      background:#f0f1f5;
+      color:#11131b;
+      font-size:16px;
+    }
+    .museum-visit-item small{
+      display:block;
+      color:#858b96;
+      font-size:8px;
+      font-weight:800;
+      letter-spacing:.65px;
+      text-transform:uppercase;
+      margin-bottom:3px;
+    }
+    .museum-visit-item strong{
+      display:block;
+      font-size:12px;
+      line-height:1.35;
+    }
+    .museum-detail-actions{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:8px;
+      margin-top:auto;
+      padding-top:22px;
+    }
+    .museum-detail-action{
+      min-height:50px;
+      padding:0 14px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:9px;
+      border:1px solid #11131b;
+      background:#11131b;
+      color:#fff;
+      font-size:11px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.35px;
+    }
+    .museum-detail-action.secondary{background:#fff;color:#11131b}
+    .museum-detail-action:hover{background:#6f4cff;border-color:#6f4cff;color:#fff}
+
+    /* content */
+    .museum-detail-content{padding:0 0 76px}
+    .museum-detail-content-grid{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) 300px;
+      gap:18px;
+      align-items:start;
+    }
+    .museum-detail-main{min-width:0;background:#fff;border:1px solid #dfe2e8}
+
+    .museum-detail-tabs{
+      display:flex;
+      flex-wrap:nowrap;
+      border-bottom:1px solid #dfe2e8;
+      background:#fff;
+      min-width:0;
+      overflow-x:auto;
+      scrollbar-width:none;
+      -webkit-overflow-scrolling:touch;
+    }
+    .museum-detail-tabs::-webkit-scrollbar{display:none}
+    .museum-detail-tab{
+      flex:0 0 auto;
+      min-height:58px;
+      padding:0 17px;
+      border:0;
+      border-right:1px solid #e4e6eb;
+      background:#fff;
+      color:#6a7080;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-size:10px;
+      font-weight:900;
+      white-space:nowrap;
+      text-transform:uppercase;
+      letter-spacing:.28px;
+    }
+    .museum-detail-tab i{font-size:14px}
+    .museum-detail-tab.active{background:#11131b;color:#fff}
+
+    .museum-tab-panel{padding:30px;min-width:0}
+    .museum-tab-panel[hidden]{display:none!important}
+    .museum-section-index{
+      display:block;
+      margin-bottom:8px;
+      color:#d9dce3;
+      font-size:24px;
+      font-weight:900;
+      line-height:1;
+    }
+    .museum-content-kicker{
+      display:block;
+      margin-bottom:8px;
+      color:#6f4cff;
+      font-size:9px;
+      font-weight:900;
+      letter-spacing:1.1px;
+      text-transform:uppercase;
+    }
+    .museum-tab-panel h2{
+      margin:0 0 16px;
+      font-size:32px;
+      line-height:1.05;
+      letter-spacing:-1.3px;
+    }
+    .museum-tab-panel p{
+      color:#69707d;
+      font-size:13px;
+      line-height:1.85;
+    }
+
+    .museum-fact-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:0;
+      margin-top:24px;
+      border-top:1px solid #e3e6eb;
+      border-left:1px solid #e3e6eb;
+    }
+    .museum-fact{
+      min-height:118px;
+      padding:18px;
+      border-right:1px solid #e3e6eb;
+      border-bottom:1px solid #e3e6eb;
+    }
+    .museum-fact i{font-size:21px;color:#6f4cff}
+    .museum-fact strong{display:block;margin:9px 0 5px;font-size:13px}
+    .museum-fact span{display:block;color:#777d89;font-size:10px;line-height:1.55}
+
+    /* photo gallery */
+    .museum-photo-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:8px;
+    }
+    .museum-photo{
+      position:relative;
+      min-height:220px;
+      padding:0;
+      border:0;
+      background:#11131b;
+      overflow:hidden;
+    }
+    .museum-photo:nth-child(1),
+    .museum-photo:nth-child(5){grid-column:span 2}
+    .museum-photo img{
+      width:100%;height:100%;object-fit:cover;
+      position:absolute;inset:0;
+      transition:transform .35s ease,opacity .25s ease;
+    }
+    .museum-photo:hover img{transform:scale(1.035);opacity:.88}
+    .museum-photo::after{
+      content:"\F52A";
+      font-family:"bootstrap-icons";
+      position:absolute;
+      right:12px;bottom:12px;
+      width:34px;height:34px;
+      display:grid;place-items:center;
+      background:#fff;color:#11131b;
+      font-size:15px;
+    }
+
+    /* videos */
+    .museum-video-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+    .museum-video-card{border:1px solid #e1e4ea;background:#fff}
+    .museum-video-poster{position:relative;aspect-ratio:16/9;overflow:hidden;background:#11131b}
+    .museum-video-poster img{width:100%;height:100%;object-fit:cover}
+    .museum-video-poster::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(0,0,0,.55))}
+    .museum-video-play{
+      position:absolute;z-index:2;left:18px;bottom:16px;
+      width:46px;height:46px;display:grid;place-items:center;
+      background:#fff;color:#11131b;font-size:19px;
+    }
+    .museum-video-copy{padding:15px}
+    .museum-video-copy small{font-size:8px;color:#858b96;font-weight:900;letter-spacing:.7px}
+    .museum-video-copy h3{font-size:15px;line-height:1.3;margin:6px 0 0}
+
+    /* event cards */
+    .museum-event-list{display:grid;gap:10px}
+    .museum-event-card{
+      display:grid;
+      grid-template-columns:180px minmax(0,1fr) 110px;
+      min-height:150px;
+      border:1px solid #e1e4ea;
+      background:#fff;
+      color:#11131b;
+    }
+    .museum-event-card img{width:100%;height:100%;object-fit:cover}
+    .museum-event-copy{padding:16px}
+    .museum-event-copy small{font-size:8px;color:#6f4cff;font-weight:900;letter-spacing:.7px}
+    .museum-event-copy h3{margin:6px 0 8px;font-size:17px;line-height:1.2}
+    .museum-event-meta{display:flex;gap:14px;flex-wrap:wrap;color:#777d88;font-size:9px}
+    .museum-event-meta span{display:flex;align-items:center;gap:5px}
+    .museum-event-go{
+      display:flex;align-items:center;justify-content:center;
+      border-left:1px solid #e1e4ea;
+      background:#f7f8fa;
+      font-size:10px;font-weight:900;text-transform:uppercase;text-align:center;
+    }
+    .museum-event-card:hover .museum-event-go{background:#11131b;color:#fff}
+
+    /* news */
+    .museum-news-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:10px}
+    .museum-news-feature,
+    .museum-news-small{border:1px solid #e1e4ea;background:#fff;display:block}
+    .museum-news-feature img{width:100%;aspect-ratio:16/9;object-fit:cover}
+    .museum-news-copy{padding:16px}
+    .museum-news-copy small{font-size:8px;color:#6f4cff;font-weight:900;letter-spacing:.7px}
+    .museum-news-copy h3{font-size:18px;line-height:1.25;margin:7px 0}
+    .museum-news-copy p{font-size:10px;line-height:1.65;margin:0}
+    .museum-news-stack{display:grid;gap:10px}
+    .museum-news-small{display:grid;grid-template-columns:120px 1fr;min-height:116px}
+    .museum-news-small img{width:100%;height:100%;object-fit:cover}
+    .museum-news-small .museum-news-copy{padding:12px}
+    .museum-news-small .museum-news-copy h3{font-size:13px;margin-bottom:0}
+
+    /* transport */
+    .museum-transport-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      border-top:1px solid #e1e4ea;
+      border-left:1px solid #e1e4ea;
+      margin-bottom:14px;
+    }
+    .museum-transport-item{
+      min-height:92px;
+      padding:14px;
+      border-right:1px solid #e1e4ea;
+      border-bottom:1px solid #e1e4ea;
+      display:grid;
+      grid-template-columns:34px 1fr;
+      gap:10px;
+      align-items:start;
+    }
+    .museum-transport-item i{width:34px;height:34px;background:#f0f1f5;display:grid;place-items:center}
+    .museum-transport-item small{display:block;color:#888d98;font-size:8px;font-weight:900;text-transform:uppercase;letter-spacing:.6px}
+    .museum-transport-item strong{display:block;margin-top:4px;font-size:11px;line-height:1.55}
+    .museum-map-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+    .museum-map-actions a{
+      min-height:46px;display:flex;align-items:center;justify-content:center;gap:8px;
+      border:1px solid #11131b;font-size:10px;font-weight:900;text-transform:uppercase;
+    }
+    .museum-map-actions a:first-child{background:#11131b;color:#fff}
+    .museum-map-frame{height:340px;border:1px solid #e1e4ea;overflow:hidden}
+    .museum-map-frame iframe{width:100%;height:100%;border:0}
+
+    /* sidebar */
+    .museum-detail-side{
+      position:sticky;
+      top:108px;
+      display:grid;
+      gap:10px;
+    }
+    .museum-side-card{
+      border:1px solid #dfe2e8;
+      background:#fff;
+      padding:20px;
+    }
+    .museum-side-card.dark{background:#11131b;color:#fff;border-color:#11131b}
+    .museum-side-card small{
+      display:block;
+      margin-bottom:7px;
+      font-size:8px;
+      font-weight:900;
+      letter-spacing:.8px;
+      text-transform:uppercase;
+      color:#8c92a0;
+    }
+    .museum-side-card.dark small{color:#aeb4c1}
+    .museum-side-card h3{font-size:20px;line-height:1.15;margin:0 0 14px}
+    .museum-side-row{
+      display:flex;justify-content:space-between;gap:10px;
+      padding:10px 0;border-top:1px solid #eceef2;
+      font-size:10px;
+    }
+    .museum-side-card.dark .museum-side-row{border-color:#ffffff18}
+    .museum-side-row b{font-size:10px}
+    .museum-side-cta{
+      margin-top:12px;min-height:46px;
+      display:flex;align-items:center;justify-content:center;gap:8px;
+      background:#f5db3f;color:#11131b;font-size:10px;font-weight:900;text-transform:uppercase;
+    }
+    .museum-side-help{
+      display:flex;gap:10px;align-items:flex-start;
+      padding-top:12px;border-top:1px solid #eceef2;
+    }
+    .museum-side-help i{font-size:18px}
+    .museum-side-help p{margin:0;color:#767c88;font-size:9px;line-height:1.55}
+
+    /* lightbox */
+    .museum-lightbox{
+      position:fixed;inset:0;z-index:14000;
+      background:rgba(4,5,9,.94);
+      display:flex;align-items:center;justify-content:center;
+      padding:24px;
+    }
+    .museum-lightbox[hidden]{display:none!important}
+    .museum-lightbox img{max-width:min(1200px,88vw);max-height:82vh;object-fit:contain}
+    .museum-lightbox-close,
+    .museum-lightbox-nav{
+      position:absolute;
+      width:48px;height:48px;
+      border:1px solid rgba(255,255,255,.25);
+      background:#11131b;color:#fff;
+      display:grid;place-items:center;
+      font-size:19px;
+    }
+    .museum-lightbox-close{right:24px;top:24px}
+    .museum-lightbox-prev{left:24px;top:50%;transform:translateY(-50%)}
+    .museum-lightbox-next{right:24px;top:50%;transform:translateY(-50%)}
+    .museum-lightbox-count{
+      position:absolute;left:50%;bottom:22px;transform:translateX(-50%);
+      color:#fff;font-size:10px;font-weight:800;letter-spacing:.7px;
+    }
+
+    /* strictly sharp */
+    .museum-detail-clean .museum-detail-hero-grid,
+    .museum-detail-clean .museum-detail-photo-count,
+    .museum-detail-clean .museum-detail-type,
+    .museum-detail-clean .museum-visit-item,
+    .museum-detail-clean .museum-detail-action,
+    .museum-detail-clean .museum-detail-main,
+    .museum-detail-clean .museum-detail-tab,
+    .museum-detail-clean .museum-fact,
+    .museum-detail-clean .museum-photo,
+    .museum-detail-clean .museum-video-card,
+    .museum-detail-clean .museum-video-play,
+    .museum-detail-clean .museum-event-card,
+    .museum-detail-clean .museum-news-feature,
+    .museum-detail-clean .museum-news-small,
+    .museum-detail-clean .museum-transport-item,
+    .museum-detail-clean .museum-map-actions a,
+    .museum-detail-clean .museum-map-frame,
+    .museum-detail-clean .museum-side-card,
+    .museum-detail-clean .museum-side-cta,
+    .museum-detail-clean .museum-lightbox-close,
+    .museum-detail-clean .museum-lightbox-nav{
+      border-radius:0!important;
+    }
+
+    @media(max-width:1100px){
+      .museum-detail-hero-grid{grid-template-columns:1fr}
+      .museum-detail-visual{min-height:520px;border-right:0;border-bottom:1px solid #dfe2e8}
+      .museum-detail-summary{min-height:470px}
+      .museum-detail-content-grid{grid-template-columns:1fr}
+      .museum-detail-side{position:relative;top:auto;grid-template-columns:1fr 1fr}
+    }
+
+    @media(max-width:720px){
+      .museum-detail-clean .container-xl{width:calc(100% - 20px)}
+      .museum-detail-breadcrumb{margin-top:72px}
+      .museum-detail-breadcrumb .container-xl{font-size:9px}
+      .museum-detail-hero{padding:10px 0 14px}
+      .museum-detail-hero-grid{min-height:0}
+      .museum-detail-visual{min-height:330px}
+      .museum-detail-summary{padding:20px;min-height:0}
+      .museum-detail-summary h1{font-size:35px;letter-spacing:-1.8px}
+      .museum-detail-lead{font-size:12px}
+      .museum-visit-item{min-height:82px;padding:12px}
+      .museum-detail-actions{grid-template-columns:1fr}
+      .museum-detail-content{padding-bottom:44px}
+      .museum-detail-content-grid{gap:10px}
+      .museum-detail-tabs{
+        width:100%;
+        max-width:100%;
+        overflow-x:auto;
+        touch-action:pan-x;
+      }
+      .museum-detail-tab{min-height:50px;padding:0 13px;font-size:9px}
+      .museum-tab-panel{padding:20px 16px;overflow:hidden}
+      .museum-tab-panel h2{font-size:25px}
+      .museum-tab-panel p{font-size:12px}
+      .museum-fact-grid{grid-template-columns:1fr 1fr}
+      .museum-photo-grid{grid-template-columns:1fr 1fr}
+      .museum-photo,.museum-photo:nth-child(1),.museum-photo:nth-child(5){grid-column:auto;min-height:160px}
+      .museum-video-grid{grid-template-columns:1fr}
+      .museum-event-card{grid-template-columns:115px minmax(0,1fr)}
+      .museum-event-go{grid-column:1/-1;min-height:42px;border-left:0;border-top:1px solid #e1e4ea}
+      .museum-event-copy{padding:12px}
+      .museum-news-grid{grid-template-columns:1fr}
+      .museum-news-small{grid-template-columns:100px 1fr}
+      .museum-transport-grid{grid-template-columns:1fr}
+      .museum-map-actions{grid-template-columns:1fr 1fr}
+      .museum-map-frame{height:280px}
+      .museum-detail-side{grid-template-columns:1fr}
+      .museum-lightbox{padding:10px}
+      .museum-lightbox-prev{left:8px}.museum-lightbox-next{right:8px}.museum-lightbox-close{right:8px;top:8px}
+    }
+
+    @media(max-width:420px){
+      .museum-visit-grid{grid-template-columns:1fr 1fr}
+      .museum-visit-item{grid-template-columns:28px 1fr;padding:10px}
+      .museum-visit-item i{width:28px;height:28px;font-size:13px}
+      .museum-visit-item strong{font-size:10px}
+      .museum-fact-grid{grid-template-columns:1fr}
+      .museum-photo-grid{grid-template-columns:1fr}
+      .museum-photo{min-height:210px}
+      .museum-map-actions{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body class="app-body museum-detail-clean">
+<div id="commonHeader"></div>
+
+<main>
+<section class="museum-detail-hero">
+<div class="container-xl">
+<div class="museum-detail-hero-grid">
+<div class="museum-detail-visual">
+<img alt="Merinos Tekstil Sanayi Müzesi" src="https://images.unsplash.com/photo-1561214115-f2f134cc4912?auto=format&amp;fit=crop&amp;w=1800&amp;q=88"/>
+<div class="museum-detail-photo-meta">
+<div>
+<small>BURSA · MERİNOS</small>
+<strong>Sanayi mirasının yaşayan hafızası</strong>
+</div>
+<div class="museum-detail-photo-count"><i class="bi bi-images"></i> 18 FOTOĞRAF</div>
+</div>
+</div>
+<aside class="museum-detail-summary">
+<span class="museum-detail-type">SANAYİ &amp; KENT HAFIZASI</span>
+<h1>Merinos Tekstil Sanayi Müzesi</h1>
+<p class="museum-detail-lead">Bursa'nın üretim kültürünü, tekstil sanayisinin dönüşümünü ve Merinos Fabrikası'nın toplumsal bellekteki yerini özgün makine, belge ve anlatılarla keşfedin.</p>
+<div class="museum-visit-grid">
+<div class="museum-visit-item">
+<i class="bi bi-clock"></i>
+<div><small>Ziyaret Saatleri</small><strong>09:30 – 17:30</strong></div>
+</div>
+<div class="museum-visit-item">
+<i class="bi bi-calendar-x"></i>
+<div><small>Kapalı Gün</small><strong>Pazartesi</strong></div>
+</div>
+<div class="museum-visit-item">
+<i class="bi bi-ticket-perforated"></i>
+<div><small>Giriş</small><strong>Ücretsiz</strong></div>
+</div>
+<div class="museum-visit-item">
+<i class="bi bi-universal-access"></i>
+<div><small>Erişilebilirlik</small><strong>Uygun</strong></div>
+</div>
+<div class="museum-visit-item">
+<i class="bi bi-hourglass-split"></i>
+<div><small>Önerilen Süre</small><strong>60–90 dk</strong></div>
+</div>
+<div class="museum-visit-item">
+<i class="bi bi-geo-alt"></i>
+<div><small>Konum</small><strong>Merinos / Osmangazi</strong></div>
+</div>
+</div>
+<div class="museum-detail-actions">
+<a class="museum-detail-action" href="sanal-sergiler.html"><i class="bi bi-badge-3d"></i> Sanal Müze</a>
+<a class="museum-detail-action secondary" href="okul-randevusu.html"><i class="bi bi-mortarboard"></i> Okul Randevusu</a>
+</div>
+</aside>
+</div>
+</div>
+</section>
+<section class="museum-detail-content">
+<div class="container-xl">
+<div class="museum-detail-content-grid">
+<section class="museum-detail-main">
+<nav aria-label="Müze detay içerikleri" class="museum-detail-tabs" role="tablist">
+<button class="museum-detail-tab active" data-museum-tab="hakkinda"><i class="bi bi-building"></i>Müze Hakkında</button>
+<button class="museum-detail-tab" data-museum-tab="fotograflar"><i class="bi bi-images"></i>Fotoğraf Galerisi</button>
+<button class="museum-detail-tab" data-museum-tab="videolar"><i class="bi bi-play-btn"></i>Video Galerisi</button>
+<button class="museum-detail-tab" data-museum-tab="etkinlikler"><i class="bi bi-stars"></i>Etkinlikler</button>
+<button class="museum-detail-tab" data-museum-tab="haberler"><i class="bi bi-newspaper"></i>Haberler</button>
+<button class="museum-detail-tab" data-museum-tab="ulasim"><i class="bi bi-geo-alt"></i>Ulaşım</button>
+</nav>
+<div class="museum-tab-panel active" data-museum-panel="hakkinda">
+<span class="museum-section-index">01</span>
+<span class="museum-content-kicker">MÜZE HAKKINDA</span>
+<h2>Üretim kültüründen yaşayan kent hafızasına</h2>
+<p>Merinos Tekstil Sanayi Müzesi, Bursa'nın sanayileşme sürecini yalnızca üretim makineleri üzerinden değil; çalışanların gündelik yaşamı, fabrika kültürü, eğitim, sosyal hayat ve kent dönüşümü üzerinden de anlatan kapsamlı bir müze deneyimidir.</p>
+<p>Ziyaret rotasında tekstil üretiminin temel aşamaları, dönemin makineleri, fabrika arşivinden fotoğraflar, belgeler ve Merinos'un Bursa ile kurduğu güçlü bağ farklı anlatım katmanlarıyla sunulur.</p>
+<div class="museum-fact-grid">
+<div class="museum-fact"><i class="bi bi-gear-wide-connected"></i><strong>Üretim Hafızası</strong><span>Tekstil üretim süreçleri ve özgün endüstri ekipmanları.</span></div>
+<div class="museum-fact"><i class="bi bi-archive"></i><strong>Arşiv</strong><span>Fotoğraflar, belgeler ve kurum belleğine ait seçkiler.</span></div>
+<div class="museum-fact"><i class="bi bi-people"></i><strong>Sosyal Yaşam</strong><span>Merinos çalışanlarının kent yaşamına uzanan hikâyeleri.</span></div>
+<div class="museum-fact"><i class="bi bi-hand-index-thumb"></i><strong>Deneyim</strong><span>Üretim süreçlerini anlaşılır kılan etkileşimli anlatımlar.</span></div>
+<div class="museum-fact"><i class="bi bi-mortarboard"></i><strong>Eğitim</strong><span>Okul grupları ve çocuklar için planlanan müze programları.</span></div>
+<div class="museum-fact"><i class="bi bi-universal-access"></i><strong>Erişilebilirlik</strong><span>Engelsiz giriş ve ziyaret rotası olanakları.</span></div>
+</div>
+</div>
+<div class="museum-tab-panel" data-museum-panel="fotograflar" hidden="">
+<span class="museum-section-index">02</span>
+<span class="museum-content-kicker">FOTOĞRAF GALERİSİ</span>
+<h2>Müzenin mekânlarını yakından görün</h2>
+<div class="museum-photo-grid">
+<button class="museum-photo" data-gallery-index="0"><img alt="Müze galerisi 1" src="https://images.unsplash.com/photo-1561214115-f2f134cc4912?auto=format&amp;fit=crop&amp;w=1400&amp;q=86"/></button>
+<button class="museum-photo" data-gallery-index="1"><img alt="Müze galerisi 2" src="https://images.unsplash.com/photo-1564399579883-451a5d44ec08?auto=format&amp;fit=crop&amp;w=1200&amp;q=86"/></button>
+<button class="museum-photo" data-gallery-index="2"><img alt="Müze galerisi 3" src="https://images.unsplash.com/photo-1577083552431-6e5fd01988a5?auto=format&amp;fit=crop&amp;w=1200&amp;q=86"/></button>
+<button class="museum-photo" data-gallery-index="3"><img alt="Müze galerisi 4" src="https://images.unsplash.com/photo-1518998053901-5348d3961a04?auto=format&amp;fit=crop&amp;w=1200&amp;q=86"/></button>
+<button class="museum-photo" data-gallery-index="4"><img alt="Müze galerisi 5" src="https://images.unsplash.com/photo-1531058020387-3be344556be6?auto=format&amp;fit=crop&amp;w=1400&amp;q=86"/></button>
+<button class="museum-photo" data-gallery-index="5"><img alt="Müze galerisi 6" src="https://images.unsplash.com/photo-1577083288073-40892c0860a4?auto=format&amp;fit=crop&amp;w=1200&amp;q=86"/></button>
+<button class="museum-photo" data-gallery-index="6"><img alt="Müze galerisi 7" src="https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&amp;fit=crop&amp;w=1200&amp;q=86"/></button>
+<button class="museum-photo" data-gallery-index="7"><img alt="Müze galerisi 8" src="https://images.unsplash.com/photo-1547891654-e66ed7ebb968?auto=format&amp;fit=crop&amp;w=1200&amp;q=86"/></button>
+</div>
+</div>
+<div class="museum-tab-panel" data-museum-panel="videolar" hidden="">
+<span class="museum-section-index">03</span>
+<span class="museum-content-kicker">VİDEO GALERİSİ</span>
+<h2>Müze hikâyesini görüntülerle keşfedin</h2>
+<div class="museum-video-grid">
+<article class="museum-video-card">
+<div class="museum-video-poster">
+<img alt="" src="https://images.unsplash.com/photo-1561214115-f2f134cc4912?auto=format&amp;fit=crop&amp;w=1200&amp;q=86"/>
+<span class="museum-video-play"><i class="bi bi-play-fill"></i></span>
+</div>
+<div class="museum-video-copy"><small>MÜZE TANITIM FİLMİ · 03:42</small><h3>Merinos'un üretimden kültür merkezine uzanan hikâyesi</h3></div>
+</article>
+<article class="museum-video-card">
+<div class="museum-video-poster">
+<img alt="" src="https://images.unsplash.com/photo-1515169067865-5387ec356754?auto=format&amp;fit=crop&amp;w=1200&amp;q=86"/>
+<span class="museum-video-play"><i class="bi bi-play-fill"></i></span>
+</div>
+<div class="museum-video-copy"><small>KOLEKSİYON · 05:18</small><h3>Tekstil makineleri ve üretim süreçlerinden seçkiler</h3></div>
+</article>
+<article class="museum-video-card">
+<div class="museum-video-poster">
+<img alt="" src="https://images.unsplash.com/photo-1518998053901-5348d3961a04?auto=format&amp;fit=crop&amp;w=1200&amp;q=86"/>
+<span class="museum-video-play"><i class="bi bi-play-fill"></i></span>
+</div>
+<div class="museum-video-copy"><small>SÖZLÜ TARİH · 06:25</small><h3>Merinos çalışanlarının anılarından Bursa'nın sanayi belleği</h3></div>
+</article>
+<article class="museum-video-card">
+<div class="museum-video-poster">
+<img alt="" src="https://images.unsplash.com/photo-1577083552431-6e5fd01988a5?auto=format&amp;fit=crop&amp;w=1200&amp;q=86"/>
+<span class="museum-video-play"><i class="bi bi-play-fill"></i></span>
+</div>
+<div class="museum-video-copy"><small>EĞİTİM · 04:10</small><h3>Çocuklar için tekstil üretiminin temel aşamaları</h3></div>
+</article>
+</div>
+</div>
+<div class="museum-tab-panel" data-museum-panel="etkinlikler" hidden="">
+<span class="museum-section-index">04</span>
+<span class="museum-content-kicker">MÜZEDEKİ ETKİNLİKLER</span>
+<h2>Merinos'ta yaklaşan programlar</h2>
+<div class="museum-event-list">
+<a class="museum-event-card" href="etkinlik-detay.html">
+<img alt="" src="https://images.unsplash.com/photo-1515169067865-5387ec356754?auto=format&amp;fit=crop&amp;w=900&amp;q=84"/>
+<div class="museum-event-copy"><small>ATÖLYE</small><h3>Dokuma Deneyimi Atölyesi</h3><div class="museum-event-meta"><span><i class="bi bi-calendar3"></i> 08 Eylül 2026</span><span><i class="bi bi-clock"></i> 14:00</span></div></div>
+<span class="museum-event-go">İncele <i class="bi bi-arrow-up-right"></i></span>
+</a>
+<a class="museum-event-card" href="etkinlik-detay.html">
+<img alt="" src="https://images.unsplash.com/photo-1531058020387-3be344556be6?auto=format&amp;fit=crop&amp;w=900&amp;q=84"/>
+<div class="museum-event-copy"><small>REHBERLİ GEZİ</small><h3>Sanayi Hafızası: Merinos Rotası</h3><div class="museum-event-meta"><span><i class="bi bi-calendar3"></i> 12 Eylül 2026</span><span><i class="bi bi-clock"></i> 11:00</span></div></div>
+<span class="museum-event-go">İncele <i class="bi bi-arrow-up-right"></i></span>
+</a>
+<a class="museum-event-card" href="etkinlik-detay.html">
+<img alt="" src="https://images.unsplash.com/photo-1577083552431-6e5fd01988a5?auto=format&amp;fit=crop&amp;w=900&amp;q=84"/>
+<div class="museum-event-copy"><small>ÇOCUK PROGRAMI</small><h3>İplikten Kumaşa Keşif Atölyesi</h3><div class="museum-event-meta"><span><i class="bi bi-calendar3"></i> 19 Eylül 2026</span><span><i class="bi bi-clock"></i> 13:30</span></div></div>
+<span class="museum-event-go">İncele <i class="bi bi-arrow-up-right"></i></span>
+</a>
+</div>
+</div>
+<div class="museum-tab-panel" data-museum-panel="haberler" hidden="">
+<span class="museum-section-index">05</span>
+<span class="museum-content-kicker">MÜZEDEN HABERLER</span>
+<h2>Merinos'tan güncel gelişmeler</h2>
+<div class="museum-news-grid">
+<a class="museum-news-feature" href="#">
+<img alt="" src="https://images.unsplash.com/photo-1561214115-f2f134cc4912?auto=format&amp;fit=crop&amp;w=1200&amp;q=86"/>
+<div class="museum-news-copy"><small>04 EYLÜL 2026</small><h3>Merinos'un sanayi belleğini anlatan yeni seçki ziyarete açıldı</h3><p>Arşiv belgeleri ve üretim araçlarından oluşan yeni bölüm ziyaretçilerle buluştu.</p></div>
+</a>
+<div class="museum-news-stack">
+<a class="museum-news-small" href="#">
+<img alt="" src="https://images.unsplash.com/photo-1518998053901-5348d3961a04?auto=format&amp;fit=crop&amp;w=800&amp;q=84"/>
+<div class="museum-news-copy"><small>28 AĞUSTOS 2026</small><h3>Müze Akademi programlarında yeni dönem başladı</h3></div>
+</a>
+<a class="museum-news-small" href="#">
+<img alt="" src="https://images.unsplash.com/photo-1577083552431-6e5fd01988a5?auto=format&amp;fit=crop&amp;w=800&amp;q=84"/>
+<div class="museum-news-copy"><small>16 AĞUSTOS 2026</small><h3>Çocuklar üretim tarihini atölyede deneyimledi</h3></div>
+</a>
+<a class="museum-news-small" href="#">
+<img alt="" src="https://images.unsplash.com/photo-1531058020387-3be344556be6?auto=format&amp;fit=crop&amp;w=800&amp;q=84"/>
+<div class="museum-news-copy"><small>02 AĞUSTOS 2026</small><h3>Merinos arşivinden yeni fotoğraf seçkisi</h3></div>
+</a>
+</div>
+</div>
+</div>
+<div class="museum-tab-panel" data-museum-panel="ulasim" hidden="">
+<span class="museum-section-index">06</span>
+<span class="museum-content-kicker">ULAŞIM &amp; ZİYARET</span>
+<h2>Müzeye nasıl ulaşabilirsiniz?</h2>
+<div class="museum-transport-grid">
+<div class="museum-transport-item"><i class="bi bi-geo-alt"></i><div><small>Adres</small><strong>Merinos Atatürk Kongre ve Kültür Merkezi, Osmangazi / Bursa</strong></div></div>
+<div class="museum-transport-item"><i class="bi bi-telephone"></i><div><small>Telefon</small><strong>+90 (224) 716 37 37</strong></div></div>
+<div class="museum-transport-item"><i class="bi bi-bus-front"></i><div><small>Toplu Taşıma</small><strong>Merinos istasyonu ve çevre otobüs duraklarından erişim.</strong></div></div>
+<div class="museum-transport-item"><i class="bi bi-p-circle"></i><div><small>Otopark</small><strong>Merinos AKKM çevresinde otopark alanları bulunur.</strong></div></div>
+<div class="museum-transport-item"><i class="bi bi-universal-access"></i><div><small>Erişilebilirlik</small><strong>Engelli ziyaretçiler için uygun giriş ve dolaşım güzergâhı.</strong></div></div>
+<div class="museum-transport-item"><i class="bi bi-clock"></i><div><small>Ziyaret</small><strong>Pazartesi hariç 09:30 – 17:30</strong></div></div>
+</div>
+<div class="museum-map-actions">
+<a href="https://www.google.com/maps/search/?api=1&amp;query=Merinos+Ataturk+Kongre+Kultur+Merkezi+Bursa" rel="noopener" target="_blank"><i class="bi bi-sign-turn-right"></i> Yol Tarifi Al</a>
+<a href="#museum-map"><i class="bi bi-map"></i> Haritayı Göster</a>
+</div>
+<div class="museum-map-frame" id="museum-map">
+<iframe loading="lazy" src="https://maps.google.com/maps?q=Merinos%20Atat%C3%BCrk%20Kongre%20ve%20K%C3%BClt%C3%BCr%20Merkezi%20Bursa&amp;t=&amp;z=15&amp;ie=UTF8&amp;iwloc=&amp;output=embed" title="Merinos Tekstil Sanayi Müzesi haritası"></iframe>
+</div>
+</div>
+</section>
+<aside class="museum-detail-side">
+<div class="museum-side-card dark">
+<small>BUGÜNKÜ DURUM</small>
+<h3>Ziyarete açık</h3>
+<div class="museum-side-row"><span>Şu an</span><b>AÇIK</b></div>
+<div class="museum-side-row"><span>Kapanış</span><b>17:30</b></div>
+<div class="museum-side-row"><span>Giriş</span><b>Ücretsiz</b></div>
+<div class="museum-side-row"><span>Önerilen süre</span><b>60–90 dk</b></div>
+<a class="museum-side-cta" href="sanal-sergiler.html"><i class="bi bi-badge-3d"></i> 360° Sanal Müze</a>
+</div>
+<div class="museum-side-card">
+<small>ZİYARETÇİ DESTEĞİ</small>
+<h3>Yardıma mı ihtiyacınız var?</h3>
+<div class="museum-side-help"><i class="bi bi-telephone"></i><p>Ziyaret, grup gezisi veya erişilebilirlik hakkında bilgi almak için ziyaretçi merkezimize ulaşabilirsiniz.</p></div>
+<div class="museum-side-row"><span>Telefon</span><b>0224 716 37 37</b></div>
+<div class="museum-side-row"><span>E-posta</span><b>bursamuze@bursa.bel.tr</b></div>
+</div>
+</aside>
+</div>
+</div>
+</section>
+</main>
+<div class="museum-lightbox" hidden="" id="museumLightbox">
+<button aria-label="Kapat" class="museum-lightbox-close" type="button"><i class="bi bi-x-lg"></i></button>
+<button aria-label="Önceki" class="museum-lightbox-nav museum-lightbox-prev" type="button"><i class="bi bi-chevron-left"></i></button>
+<img alt="" id="museumLightboxImage" src=""/>
+<button aria-label="Sonraki" class="museum-lightbox-nav museum-lightbox-next" type="button"><i class="bi bi-chevron-right"></i></button>
+<div class="museum-lightbox-count" id="museumLightboxCount"></div>
+</div>
+<div id="commonFooter"></div>
+<script defer="" src="assets/js/common-layout.js"></script>
+<script defer="" src="assets/js/site.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded',()=>{
+      const tabs=[...document.querySelectorAll('.museum-detail-tab')];
+      const panels=[...document.querySelectorAll('.museum-tab-panel')];
+
+      tabs.forEach(btn=>{
+        btn.addEventListener('click',()=>{
+          const key=btn.dataset.museumTab;
+          tabs.forEach(x=>x.classList.toggle('active',x===btn));
+          panels.forEach(panel=>{
+            const active=panel.dataset.museumPanel===key;
+            panel.hidden=!active;
+            panel.classList.toggle('active',active);
+          });
+          if(window.innerWidth<=720){
+            btn.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+          }
+        });
+      });
+
+      const photoButtons=[...document.querySelectorAll('.museum-photo')];
+      const sources=photoButtons.map(b=>b.querySelector('img')?.src).filter(Boolean);
+      const lightbox=document.getElementById('museumLightbox');
+      const lightboxImg=document.getElementById('museumLightboxImage');
+      const count=document.getElementById('museumLightboxCount');
+      let current=0;
+
+      const show=(index)=>{
+        if(!sources.length)return;
+        current=(index+sources.length)%sources.length;
+        lightboxImg.src=sources[current];
+        count.textContent=`${current+1} / ${sources.length}`;
+      };
+      const open=(index)=>{
+        show(index);
+        lightbox.hidden=false;
+        document.body.style.overflow='hidden';
+      };
+      const close=()=>{
+        lightbox.hidden=true;
+        document.body.style.overflow='';
+      };
+
+      photoButtons.forEach((b,i)=>b.addEventListener('click',()=>open(i)));
+      document.querySelector('.museum-lightbox-close')?.addEventListener('click',close);
+      document.querySelector('.museum-lightbox-prev')?.addEventListener('click',()=>show(current-1));
+      document.querySelector('.museum-lightbox-next')?.addEventListener('click',()=>show(current+1));
+      lightbox?.addEventListener('click',e=>{if(e.target===lightbox)close()});
+      document.addEventListener('keydown',e=>{
+        if(lightbox?.hidden)return;
+        if(e.key==='Escape')close();
+        if(e.key==='ArrowLeft')show(current-1);
+        if(e.key==='ArrowRight')show(current+1);
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1912 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bursa Müze | Koltuklu & Koltuksuz Bilet Satış UI</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --dark: #071426;
+            --dark-2: #0b1c33;
+            --dark-3: #10243d;
+            --line: rgba(255,255,255,.10);
+            --soft-line: #e7edf7;
+            --text: #0b1730;
+            --muted: #667085;
+            --white: #ffffff;
+            --bg: #f4f8ff;
+            --purple: #7c3aed;
+            --purple-dark: #5b21b6;
+            --green: #16a34a;
+            --blue: #2563eb;
+            --orange: #f59e0b;
+            --red: #ef4444;
+            --shadow: 0 24px 70px rgba(16, 36, 61, .12);
+            --radius: 22px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Inter", Arial, sans-serif;
+            background:
+                radial-gradient(circle at top left, rgba(124,58,237,.13), transparent 34%),
+                radial-gradient(circle at top right, rgba(37,99,235,.12), transparent 30%),
+                linear-gradient(180deg, #f8fbff 0%, #eef5ff 100%);
+            color: var(--text);
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button,
+        input,
+        select {
+            font-family: inherit;
+        }
+
+        .site-header {
+            width: 100%;
+            height: 78px;
+            background: #061225;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 38px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 12px 35px rgba(5, 12, 26, .18);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: .3px;
+        }
+
+        .brand-mark {
+            width: 38px;
+            height: 38px;
+            border: 2px solid rgba(255,255,255,.8);
+            border-radius: 12px;
+            display: grid;
+            place-items: center;
+            font-size: 20px;
+        }
+
+        .main-nav {
+            display: flex;
+            align-items: center;
+            gap: 34px;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .main-nav a {
+            opacity: .88;
+            padding: 28px 0 24px;
+            border-bottom: 3px solid transparent;
+        }
+
+        .main-nav a.active {
+            opacity: 1;
+            color: #fff;
+            border-color: var(--purple);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .header-actions span {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cart {
+            position: relative;
+            font-size: 22px;
+        }
+
+        .cart small {
+            position: absolute;
+            right: -9px;
+            top: -9px;
+            background: var(--purple);
+            color: #fff;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .page {
+            max-width: 1920px;
+            margin: 0 auto;
+            padding: 26px 24px 38px;
+        }
+
+        .view-switch {
+            width: fit-content;
+            margin: 0 auto 24px;
+            display: flex;
+            background: #ffffff;
+            border: 1px solid var(--soft-line);
+            border-radius: 18px;
+            padding: 6px;
+            box-shadow: 0 16px 45px rgba(19, 40, 74, .08);
+        }
+
+        .view-switch button {
+            border: 0;
+            background: transparent;
+            color: #263956;
+            padding: 13px 22px;
+            border-radius: 14px;
+            font-size: 14px;
+            font-weight: 800;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: .25s;
+        }
+
+        .view-switch button.active.purple {
+            background: linear-gradient(135deg, var(--purple), #4f46e5);
+            color: #fff;
+        }
+
+        .view-switch button.active.green {
+            background: linear-gradient(135deg, var(--green), #059669);
+            color: #fff;
+        }
+
+        .booking-screen {
+            display: none;
+            animation: fadeIn .25s ease;
+        }
+
+        .booking-screen.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: minmax(320px, 480px) minmax(580px, 1fr) minmax(310px, 430px);
+            gap: 24px;
+            align-items: start;
+        }
+
+        .panel {
+            background: rgba(255,255,255,.86);
+            border: 1px solid rgba(209, 219, 233, .88);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(12px);
+        }
+
+        .event-card {
+            overflow: hidden;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #41516b;
+            margin: 0 0 14px;
+        }
+
+        .event-cover {
+            height: 270px;
+            position: relative;
+            overflow: hidden;
+            background: #111827;
+        }
+
+        .event-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .badge {
+            position: absolute;
+            top: 18px;
+            left: 18px;
+            color: #fff;
+            border-radius: 10px;
+            padding: 9px 14px;
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: .2px;
+            box-shadow: 0 10px 22px rgba(0,0,0,.16);
+        }
+
+        .badge.purple {
+            background: var(--purple);
+        }
+
+        .badge.green {
+            background: var(--green);
+        }
+
+        .event-info {
+            padding: 26px 26px 22px;
+        }
+
+        .event-info h1 {
+            margin: 0 0 18px;
+            font-size: 30px;
+            line-height: 1.16;
+            letter-spacing: -.6px;
+        }
+
+        .info-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #3f4e67;
+            font-size: 15px;
+            margin: 13px 0;
+            line-height: 1.45;
+        }
+
+        .info-row i {
+            color: #6b7280;
+            font-size: 19px;
+        }
+
+        .event-mini-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 9px;
+            margin: 24px 0 22px;
+        }
+
+        .mini-info {
+            border: 1px solid var(--soft-line);
+            border-radius: 14px;
+            padding: 14px 10px;
+            display: flex;
+            gap: 9px;
+            align-items: center;
+            min-height: 68px;
+        }
+
+        .mini-info i {
+            font-size: 20px;
+            color: #42526e;
+        }
+
+        .mini-info strong {
+            display: block;
+            font-size: 12px;
+            color: #667085;
+            margin-bottom: 2px;
+        }
+
+        .mini-info span {
+            display: block;
+            font-size: 13px;
+            font-weight: 800;
+            color: #152238;
+        }
+
+        .capacity-box {
+            margin-top: 22px;
+        }
+
+        .capacity-head {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .capacity-head .green-text {
+            color: var(--green);
+        }
+
+        .progress {
+            width: 100%;
+            height: 10px;
+            border-radius: 999px;
+            background: #e7edf6;
+            overflow: hidden;
+        }
+
+        .progress span {
+            display: block;
+            height: 100%;
+            border-radius: inherit;
+        }
+
+        .progress.purple span {
+            background: linear-gradient(90deg, var(--purple), var(--blue));
+        }
+
+        .progress.green span {
+            background: linear-gradient(90deg, var(--green), #22c55e);
+        }
+
+        .capacity-count {
+            display: flex;
+            justify-content: flex-end;
+            color: #44546e;
+            font-weight: 700;
+            font-size: 14px;
+            margin-top: 8px;
+        }
+
+        .notice-box {
+            margin-top: 22px;
+            border: 1px solid #d8e2f0;
+            border-radius: 16px;
+            padding: 18px;
+            background: #f8fbff;
+            display: flex;
+            gap: 12px;
+            line-height: 1.6;
+        }
+
+        .notice-box i {
+            font-size: 26px;
+            color: var(--blue);
+            flex: 0 0 auto;
+        }
+
+        .notice-box strong {
+            display: block;
+            margin-bottom: 4px;
+            font-size: 16px;
+        }
+
+        .notice-box p {
+            margin: 0;
+            color: #526176;
+            font-size: 14px;
+        }
+
+        .main-panel {
+            padding: 28px 30px;
+        }
+
+        .step-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 18px;
+        }
+
+        .step-title h2 {
+            margin: 0;
+            font-size: 23px;
+            letter-spacing: -.2px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .step-title h2 i {
+            color: var(--purple);
+        }
+
+        .calendar-btn {
+            border: 1px solid rgba(124,58,237,.35);
+            color: var(--purple);
+            background: rgba(124,58,237,.06);
+            border-radius: 12px;
+            height: 42px;
+            padding: 0 15px;
+            font-weight: 800;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: .22s;
+        }
+
+        .calendar-btn:hover {
+            background: rgba(124,58,237,.12);
+            transform: translateY(-1px);
+        }
+
+        .green-theme .calendar-btn {
+            border-color: rgba(22,163,74,.35);
+            color: var(--green);
+            background: rgba(22,163,74,.07);
+        }
+
+        .session-strip {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(120px, 1fr)) 48px;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        .session-btn {
+            border: 1px solid #d9e2ef;
+            background: #fff;
+            border-radius: 14px;
+            min-height: 74px;
+            padding: 10px 12px;
+            cursor: pointer;
+            transition: .2s;
+            text-align: center;
+            color: #263956;
+        }
+
+        .session-btn strong {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .session-btn span {
+            display: block;
+            font-size: 12px;
+            line-height: 1.5;
+            color: #667085;
+        }
+
+        .session-btn.active.purple {
+            border-color: var(--purple);
+            box-shadow: inset 0 0 0 1px rgba(124,58,237,.55);
+            background: linear-gradient(180deg, rgba(124,58,237,.08), #fff);
+        }
+
+        .session-btn.active.green {
+            border-color: var(--green);
+            box-shadow: inset 0 0 0 1px rgba(22,163,74,.45);
+            background: linear-gradient(180deg, rgba(22,163,74,.08), #fff);
+        }
+
+        .session-arrow {
+            border: 1px solid #d9e2ef;
+            background: #fff;
+            border-radius: 14px;
+            cursor: pointer;
+            font-size: 22px;
+            color: #22304a;
+        }
+
+        .section-divider {
+            height: 1px;
+            background: var(--soft-line);
+            margin: 22px 0 24px;
+        }
+
+        .seat-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+            align-items: center;
+            margin: 0 0 16px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #42526e;
+        }
+
+        .legend-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .legend-box {
+            width: 17px;
+            height: 17px;
+            border-radius: 5px;
+            border: 1px solid #ccd6e5;
+            display: inline-block;
+        }
+
+        .legend-box.available {
+            background: #fff;
+        }
+
+        .legend-box.selected {
+            background: var(--purple);
+            border-color: var(--purple);
+        }
+
+        .legend-box.full {
+            background: #3c4658;
+            border-color: #3c4658;
+        }
+
+        .legend-box.disabled {
+            background: #eaf2ff;
+            color: var(--blue);
+        }
+
+        .stage {
+            width: 78%;
+            height: 24px;
+            margin: 0 auto 14px;
+            border-radius: 0 0 80% 80%;
+            background: linear-gradient(180deg, #606b7c, #273244);
+            color: #fff;
+            display: grid;
+            place-items: center;
+            font-weight: 900;
+            letter-spacing: .8px;
+            font-size: 13px;
+        }
+
+        .seat-map-wrap {
+            border: 1px solid #dce5f0;
+            border-radius: 18px;
+            background:
+                radial-gradient(circle at top, rgba(124,58,237,.06), transparent 35%),
+                #fbfdff;
+            padding: 18px 14px 20px;
+            overflow-x: auto;
+        }
+
+        .seat-map {
+            width: max-content;
+            min-width: 720px;
+            margin: 0 auto;
+        }
+
+        .seat-row {
+            display: grid;
+            grid-template-columns: 30px repeat(15, 34px) 30px;
+            gap: 7px;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .row-label {
+            font-weight: 900;
+            color: #1b2b44;
+            text-align: center;
+        }
+
+        .seat {
+            width: 34px;
+            height: 30px;
+            border-radius: 7px;
+            border: 1px solid #ccd6e5;
+            background: #fff;
+            color: #263956;
+            font-weight: 800;
+            font-size: 12px;
+            cursor: pointer;
+            transition: .15s;
+        }
+
+        .seat:hover:not(.full):not(.accessible) {
+            border-color: var(--purple);
+            transform: translateY(-1px);
+        }
+
+        .seat.selected {
+            background: var(--purple);
+            color: #fff;
+            border-color: var(--purple);
+            box-shadow: 0 8px 18px rgba(124,58,237,.25);
+        }
+
+        .seat.full {
+            background: #3a4352;
+            color: #fff;
+            border-color: #3a4352;
+            cursor: not-allowed;
+            opacity: .85;
+        }
+
+        .seat.accessible {
+            background: #eaf2ff;
+            color: var(--blue);
+            border-color: #bfd4ff;
+        }
+
+        .seat-note {
+            color: #667085;
+            font-size: 13px;
+            margin-top: 14px;
+        }
+
+        .ticket-type-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            margin-bottom: 22px;
+        }
+
+        .ticket-type {
+            border: 1px solid #dce5f0;
+            background: #fff;
+            border-radius: 16px;
+            padding: 18px;
+            cursor: pointer;
+            transition: .2s;
+            min-height: 118px;
+        }
+
+        .ticket-type:hover {
+            transform: translateY(-2px);
+        }
+
+        .ticket-type.active {
+            border-color: var(--green);
+            box-shadow: inset 0 0 0 1px rgba(22,163,74,.35);
+            background: rgba(22,163,74,.05);
+        }
+
+        .dot {
+            width: 19px;
+            height: 19px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+
+        .dot.purple { background: var(--purple); }
+        .dot.blue { background: var(--blue); }
+        .dot.cyan { background: #36cfc9; }
+        .dot.orange { background: var(--orange); }
+
+        .ticket-type strong {
+            display: block;
+            font-size: 17px;
+            margin-bottom: 8px;
+        }
+
+        .ticket-type p {
+            color: #65748b;
+            margin: 0 0 12px;
+            font-size: 13px;
+            line-height: 1.45;
+        }
+
+        .ticket-type b {
+            font-size: 18px;
+        }
+
+        .ticket-table {
+            border: 1px solid #dce5f0;
+            border-radius: 17px;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .ticket-row {
+            display: grid;
+            grid-template-columns: 1.6fr .7fr .6fr .7fr;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 18px;
+            border-bottom: 1px solid #e9eef6;
+        }
+
+        .ticket-row:last-child {
+            border-bottom: 0;
+        }
+
+        .ticket-row.head {
+            background: #f7faff;
+            color: #53627a;
+            font-size: 13px;
+            font-weight: 900;
+        }
+
+        .ticket-name {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+        }
+
+        .ticket-name strong {
+            display: block;
+            font-size: 15px;
+        }
+
+        .ticket-name small {
+            color: #667085;
+        }
+
+        .quota {
+            color: var(--green);
+            font-weight: 900;
+        }
+
+        .qty-control {
+            justify-self: end;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .qty-control button {
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            border: 1px solid #d8e2ef;
+            background: #fff;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .qty-control span {
+            width: 44px;
+            height: 34px;
+            border: 1px solid #d8e2ef;
+            border-radius: 10px;
+            display: grid;
+            place-items: center;
+            font-weight: 900;
+        }
+
+        .capacity-large {
+            margin-top: 22px;
+            border: 1px solid #dce5f0;
+            border-radius: 17px;
+            padding: 18px;
+            background: #fff;
+        }
+
+        .summary-panel {
+            padding: 26px;
+            position: sticky;
+            top: 100px;
+        }
+
+        .summary-panel h3 {
+            font-size: 23px;
+            margin: 0 0 22px;
+            letter-spacing: -.3px;
+        }
+
+        .summary-event {
+            display: grid;
+            grid-template-columns: 92px 1fr;
+            gap: 14px;
+            align-items: start;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e7edf7;
+            margin-bottom: 20px;
+        }
+
+        .summary-event img {
+            width: 92px;
+            height: 92px;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        .summary-event strong {
+            display: block;
+            font-size: 15px;
+            margin-bottom: 8px;
+        }
+
+        .summary-event span {
+            display: block;
+            color: #667085;
+            font-size: 13px;
+            margin-top: 7px;
+            line-height: 1.4;
+        }
+
+        .summary-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+            font-weight: 900;
+        }
+
+        .summary-title-row a {
+            color: var(--purple);
+            font-size: 13px;
+        }
+
+        .green-theme .summary-title-row a {
+            color: var(--green);
+        }
+
+        .summary-line {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            align-items: flex-start;
+            padding: 9px 0;
+            color: #1d2d45;
+            font-size: 15px;
+        }
+
+        .summary-line small {
+            display: block;
+            color: #667085;
+            margin-top: 3px;
+        }
+
+        .summary-separator {
+            height: 1px;
+            background: #e7edf7;
+            margin: 12px 0;
+        }
+
+        .total-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 18px 0;
+            font-size: 20px;
+            font-weight: 900;
+        }
+
+        .total-row b {
+            font-size: 29px;
+        }
+
+        .primary-btn,
+        .secondary-btn {
+            width: 100%;
+            height: 58px;
+            border-radius: 14px;
+            font-size: 17px;
+            font-weight: 900;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: .22s;
+        }
+
+        .primary-btn {
+            border: 0;
+            color: #fff;
+            background: linear-gradient(135deg, var(--purple), #6d28d9);
+            box-shadow: 0 18px 34px rgba(124,58,237,.24);
+        }
+
+        .green-theme .primary-btn {
+            background: linear-gradient(135deg, var(--green), #15803d);
+            box-shadow: 0 18px 34px rgba(22,163,74,.22);
+        }
+
+        .primary-btn:hover,
+        .secondary-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .secondary-btn {
+            margin-top: 12px;
+            background: #fff;
+            color: #13233b;
+            border: 1px solid #cfd9e8;
+        }
+
+        .secure {
+            text-align: center;
+            color: #667085;
+            font-size: 13px;
+            margin-top: 16px;
+        }
+
+        .summary-notice {
+            margin-top: 24px;
+            border-radius: 16px;
+            padding: 18px;
+            border: 1px solid #e9d5ff;
+            background: #fbf7ff;
+            color: #3e2d5b;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .green-theme .summary-notice {
+            border-color: #c7ead1;
+            background: #f3fbf5;
+            color: #143d26;
+        }
+
+        .summary-notice strong {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        .features {
+            margin-top: 26px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+            overflow: hidden;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,.10);
+            background: #071426;
+            color: #fff;
+            box-shadow: 0 24px 70px rgba(5, 12, 26, .25);
+        }
+
+        .feature {
+            padding: 25px 28px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            border-right: 1px solid rgba(255,255,255,.10);
+        }
+
+        .feature:last-child {
+            border-right: 0;
+        }
+
+        .feature i {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            color: #c084fc;
+            background: rgba(124,58,237,.15);
+            font-size: 25px;
+        }
+
+        .feature strong {
+            display: block;
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+
+        .feature span {
+            color: #aab6c8;
+            font-size: 14px;
+        }
+
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(3, 8, 20, .62);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 300;
+            padding: 20px;
+        }
+
+        .modal-backdrop.active {
+            display: flex;
+        }
+
+        .session-modal {
+            width: min(920px, 100%);
+            background: #fff;
+            border-radius: 24px;
+            box-shadow: 0 40px 120px rgba(0,0,0,.28);
+            overflow: hidden;
+        }
+
+        .modal-head {
+            padding: 22px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #e7edf7;
+        }
+
+        .modal-head h3 {
+            margin: 0;
+            font-size: 22px;
+        }
+
+        .modal-close {
+            border: 0;
+            background: #f2f5fb;
+            width: 42px;
+            height: 42px;
+            border-radius: 13px;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .modal-body {
+            padding: 24px;
+        }
+
+        .modal-months {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
+
+        .modal-months button {
+            border: 1px solid #dbe5f2;
+            background: #fff;
+            border-radius: 12px;
+            padding: 10px 14px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .modal-months button.active {
+            background: #071426;
+            color: #fff;
+            border-color: #071426;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 9px;
+        }
+
+        .cal-day,
+        .cal-name {
+            min-height: 64px;
+            border-radius: 13px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #e2eaf5;
+            background: #fff;
+            font-weight: 800;
+        }
+
+        .cal-name {
+            min-height: 34px;
+            background: #f7faff;
+            color: #667085;
+            font-size: 12px;
+        }
+
+        .cal-day small {
+            font-size: 11px;
+            color: #667085;
+            margin-top: 5px;
+        }
+
+        .cal-day.has-session {
+            border-color: rgba(124,58,237,.35);
+            background: rgba(124,58,237,.06);
+            cursor: pointer;
+        }
+
+        .green-theme-modal .cal-day.has-session {
+            border-color: rgba(22,163,74,.35);
+            background: rgba(22,163,74,.07);
+        }
+
+        .cal-day.selected {
+            background: var(--purple);
+            color: #fff;
+            border-color: var(--purple);
+        }
+
+        .green-theme-modal .cal-day.selected {
+            background: var(--green);
+            border-color: var(--green);
+        }
+
+        .cal-day.selected small {
+            color: rgba(255,255,255,.82);
+        }
+
+        @media (max-width: 1280px) {
+            .layout {
+                grid-template-columns: 390px 1fr;
+            }
+
+            .summary-panel {
+                grid-column: 1 / -1;
+                position: static;
+            }
+
+            .features {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .main-nav {
+                gap: 22px;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .site-header {
+                height: auto;
+                min-height: 74px;
+                padding: 16px;
+                flex-wrap: wrap;
+                gap: 14px;
+            }
+
+            .main-nav {
+                order: 3;
+                width: 100%;
+                overflow-x: auto;
+                justify-content: flex-start;
+                padding-bottom: 2px;
+            }
+
+            .main-nav a {
+                white-space: nowrap;
+                padding: 8px 0 12px;
+            }
+
+            .header-actions {
+                gap: 12px;
+            }
+
+            .header-actions span:not(.cart) {
+                display: none;
+            }
+
+            .page {
+                padding: 18px 12px 28px;
+            }
+
+            .layout {
+                grid-template-columns: 1fr;
+            }
+
+            .event-cover {
+                height: 230px;
+            }
+
+            .event-mini-grid,
+            .ticket-type-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .session-strip {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .session-arrow {
+                min-height: 52px;
+            }
+
+            .ticket-row {
+                grid-template-columns: 1fr;
+                align-items: start;
+            }
+
+            .qty-control {
+                justify-self: start;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .feature {
+                border-right: 0;
+                border-bottom: 1px solid rgba(255,255,255,.10);
+            }
+
+            .step-title {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .calendar-grid {
+                grid-template-columns: repeat(7, minmax(38px, 1fr));
+                gap: 5px;
+            }
+
+            .cal-day {
+                min-height: 54px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<header class="site-header">
+    <a href="#" class="brand">
+        <span class="brand-mark"><i class="bi bi-buildings"></i></span>
+        BURSA MÜZE
+    </a>
+
+    <nav class="main-nav">
+        <a href="#">Anasayfa</a>
+        <a href="#" class="active">Etkinlikler</a>
+        <a href="#">Müzelerimiz</a>
+        <a href="#">Hakkımızda</a>
+        <a href="#">Duyurular</a>
+        <a href="#">İletişim</a>
+    </nav>
+
+    <div class="header-actions">
+        <span><i class="bi bi-search"></i> Ara</span>
+        <span><i class="bi bi-person"></i> Hesabım</span>
+        <span class="cart"><i class="bi bi-cart3"></i><small>2</small></span>
+    </div>
+</header>
+
+<main class="page">
+
+    <div class="view-switch">
+        <button class="active purple" data-view="seated"><i class="bi bi-grid-3x3-gap"></i> Koltuklu Etkinlik</button>
+        <button data-view="standing"><i class="bi bi-people"></i> Koltuksuz Etkinlik</button>
+    </div>
+
+    <!-- KOLTUKLU -->
+    <section id="seated" class="booking-screen active">
+        <div class="layout">
+            <aside>
+                <a href="#" class="back-link"><i class="bi bi-arrow-left"></i> Etkinliklere Dön</a>
+
+                <div class="panel event-card">
+                    <div class="event-cover">
+                        <img src="https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?auto=format&fit=crop&w=1000&q=85" alt="Konser">
+                        <span class="badge purple">KONSER</span>
+                    </div>
+
+                    <div class="event-info">
+                        <h1>Cem Adrian Konseri</h1>
+
+                        <div class="info-row"><i class="bi bi-geo-alt"></i> Merinos AKKM Osmangazi Salonu</div>
+                        <div class="info-row"><i class="bi bi-calendar3"></i> <span id="seatedEventDate">15 Haziran 2024, Cumartesi</span></div>
+                        <div class="info-row"><i class="bi bi-clock"></i> <span id="seatedEventTime">20:30</span></div>
+
+                        <div class="event-mini-grid">
+                            <div class="mini-info"><i class="bi bi-clock-history"></i><div><strong>Süre</strong><span>120 dk</span></div></div>
+                            <div class="mini-info"><i class="bi bi-info-circle"></i><div><strong>Yaş Sınırı</strong><span>7+</span></div></div>
+                            <div class="mini-info"><i class="bi bi-check2-square"></i><div><strong>Etkinlik Türü</strong><span>Koltuklu</span></div></div>
+                        </div>
+
+                        <div class="capacity-box">
+                            <div class="capacity-head">
+                                <span>Kalan Koltuk</span>
+                                <span class="green-text">%68 DOLU</span>
+                            </div>
+                            <div class="progress purple"><span style="width:68%"></span></div>
+                            <div class="capacity-count">312 / 980</div>
+                        </div>
+
+                        <div class="notice-box">
+                            <i class="bi bi-info-circle"></i>
+                            <div>
+                                <strong>Koltuklu Etkinlik</strong>
+                                <p>Bu etkinlikte koltuklar numaralıdır. Seçiminizi oturma planı üzerinden belirleyebilirsiniz.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <section class="panel main-panel">
+                <div class="step-title">
+                    <h2><i class="bi bi-calendar-week"></i> 1. Seans Seçimi</h2>
+                    <button class="calendar-btn" data-modal="seatedCalendar"><i class="bi bi-people"></i> Takvimden Seç</button>
+                </div>
+
+                <div class="session-strip" data-session-group="seated">
+                    <button class="session-btn active purple" data-date="15 Haziran 2024, Cumartesi" data-time="20:30"><strong>15 Haziran</strong><span>Cumartesi</span><span>20:30</span></button>
+                    <button class="session-btn" data-date="16 Haziran 2024, Pazar" data-time="20:30"><strong>16 Haziran</strong><span>Pazar</span><span>20:30</span></button>
+                    <button class="session-btn" data-date="22 Haziran 2024, Cumartesi" data-time="20:30"><strong>22 Haziran</strong><span>Cumartesi</span><span>20:30</span></button>
+                    <button class="session-btn" data-date="23 Haziran 2024, Pazar" data-time="20:30"><strong>23 Haziran</strong><span>Pazar</span><span>20:30</span></button>
+                    <button class="session-arrow" type="button"><i class="bi bi-chevron-right"></i></button>
+                </div>
+
+                <div class="section-divider"></div>
+
+                <div class="step-title">
+                    <h2><i class="bi bi-grid-3x3-gap"></i> 2. Koltuk Seçimi</h2>
+                </div>
+
+                <div class="seat-legend">
+                    <span class="legend-item"><i class="legend-box selected"></i> Seçili</span>
+                    <span class="legend-item"><i class="legend-box available"></i> Müsait</span>
+                    <span class="legend-item"><i class="legend-box full"></i> Dolu</span>
+                    <span class="legend-item"><i class="bi bi-wheelchair"></i> Engelli</span>
+                </div>
+
+                <div class="seat-map-wrap">
+                    <div class="stage">SAHNE</div>
+                    <div id="seatMap" class="seat-map"></div>
+                </div>
+
+                <div class="seat-note">Not: Koltuklar 10 dakika boyunca sepetinizde tutulur.</div>
+            </section>
+
+            <aside class="panel summary-panel">
+                <h3>Sipariş Özeti</h3>
+
+                <div class="summary-event">
+                    <img src="https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?auto=format&fit=crop&w=400&q=85" alt="">
+                    <div>
+                        <strong>Cem Adrian Konseri</strong>
+                        <span><i class="bi bi-calendar3"></i> <span id="seatedSummaryDate">15 Haziran 2024, 20:30</span></span>
+                        <span><i class="bi bi-geo-alt"></i> Merinos AKKM Osmangazi Salonu</span>
+                    </div>
+                </div>
+
+                <div class="summary-title-row">
+                    <span>Seçilen Koltuklar (<span id="seatCount">0</span>)</span>
+                    <a href="#" id="clearSeats">Temizle</a>
+                </div>
+
+                <div id="selectedSeatsList"></div>
+
+                <div class="summary-separator"></div>
+
+                <div class="summary-line">
+                    <span>Bilet Bedeli</span>
+                    <strong id="seatSubtotal">₺0</strong>
+                </div>
+                <div class="summary-line">
+                    <span>Hizmet Bedeli <i class="bi bi-info-circle"></i></span>
+                    <strong id="seatService">₺0</strong>
+                </div>
+
+                <div class="summary-separator"></div>
+
+                <div class="total-row">
+                    <span>Toplam</span>
+                    <b id="seatTotal">₺0</b>
+                </div>
+
+                <button class="primary-btn"><i class="bi bi-cart3"></i> Sepete Ekle</button>
+                <button class="secondary-btn">Hemen Satın Al</button>
+
+                <div class="secure"><i class="bi bi-lock"></i> 256 bit SSL ile güvenli ödeme</div>
+
+                <div class="summary-notice">
+                    <strong><i class="bi bi-info-circle"></i> Önemli Bilgilendirme</strong>
+                    Etkinlik başladıktan sonra salona giriş yapılamaz. Lütfen seans saatinden en az 15 dakika önce salonda olunuz.
+                </div>
+            </aside>
+        </div>
+    </section>
+
+    <!-- KOLTUKSUZ -->
+    <section id="standing" class="booking-screen green-theme">
+        <div class="layout">
+            <aside>
+                <a href="#" class="back-link"><i class="bi bi-arrow-left"></i> Etkinliklere Dön</a>
+
+                <div class="panel event-card">
+                    <div class="event-cover">
+                        <img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=1000&q=85" alt="Açık hava konseri">
+                        <span class="badge green">KONSER</span>
+                    </div>
+
+                    <div class="event-info">
+                        <h1>Yaz Akşamı Açık Hava Konseri</h1>
+
+                        <div class="info-row"><i class="bi bi-geo-alt"></i> Merinos AKKM Açık Hava Alanı</div>
+                        <div class="info-row"><i class="bi bi-calendar3"></i> <span id="standingEventDate">21 Haziran 2024, Cuma</span></div>
+                        <div class="info-row"><i class="bi bi-clock"></i> <span id="standingEventTime">21:00</span></div>
+
+                        <div class="event-mini-grid">
+                            <div class="mini-info"><i class="bi bi-clock-history"></i><div><strong>Süre</strong><span>120 dk</span></div></div>
+                            <div class="mini-info"><i class="bi bi-people"></i><div><strong>Yaş Sınırı</strong><span>7+</span></div></div>
+                            <div class="mini-info"><i class="bi bi-box"></i><div><strong>Etkinlik Tipi</strong><span>Koltuksuz</span></div></div>
+                        </div>
+
+                        <div class="capacity-box">
+                            <div class="capacity-head">
+                                <span>Kalan Bilet</span>
+                                <span class="green-text">%40 DOLU</span>
+                            </div>
+                            <div class="progress green"><span style="width:40%"></span></div>
+                            <div class="capacity-count">480 / 1200</div>
+                        </div>
+
+                        <div class="notice-box">
+                            <i class="bi bi-info-circle"></i>
+                            <div>
+                                <strong>Koltuksuz Etkinlik</strong>
+                                <p>Bu etkinlikte koltuk numarası yoktur. Biletler kapasite ile sınırlıdır.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <section class="panel main-panel">
+                <div class="step-title">
+                    <h2><i class="bi bi-calendar-week"></i> 1. Seans Seçimi</h2>
+                    <button class="calendar-btn" data-modal="standingCalendar"><i class="bi bi-people"></i> Takvimden Seç</button>
+                </div>
+
+                <div class="session-strip" data-session-group="standing">
+                    <button class="session-btn active green" data-date="21 Haziran 2024, Cuma" data-time="21:00"><strong>21 Haziran</strong><span>Cuma</span><span>21:00</span></button>
+                    <button class="session-btn" data-date="22 Haziran 2024, Cumartesi" data-time="21:00"><strong>22 Haziran</strong><span>Cumartesi</span><span>21:00</span></button>
+                    <button class="session-btn" data-date="28 Haziran 2024, Cuma" data-time="21:00"><strong>28 Haziran</strong><span>Cuma</span><span>21:00</span></button>
+                    <button class="session-btn" data-date="29 Haziran 2024, Cumartesi" data-time="21:00"><strong>29 Haziran</strong><span>Cumartesi</span><span>21:00</span></button>
+                    <button class="session-arrow" type="button"><i class="bi bi-chevron-right"></i></button>
+                </div>
+
+                <div class="section-divider"></div>
+
+                <div class="step-title">
+                    <h2><i class="bi bi-ticket-perforated"></i> 2. Bilet Paketleri ve Adet Seçimi</h2>
+                </div>
+
+                <div class="ticket-type-grid">
+                    <div class="ticket-type active">
+                        <span class="dot purple"></span>
+                        <strong>Tam Giriş</strong>
+                        <p>18+ için geçerlidir.</p>
+                        <b>₺350</b>
+                    </div>
+                    <div class="ticket-type">
+                        <span class="dot blue"></span>
+                        <strong>Öğrenci</strong>
+                        <p>Öğrenci kimliği ile.</p>
+                        <b>₺250</b>
+                    </div>
+                    <div class="ticket-type">
+                        <span class="dot cyan"></span>
+                        <strong>VIP Alan</strong>
+                        <p>Sahne önü ayrıcalığı.</p>
+                        <b>₺650</b>
+                    </div>
+                    <div class="ticket-type">
+                        <span class="dot orange"></span>
+                        <strong>Çocuk</strong>
+                        <p>7-12 yaş arası.</p>
+                        <b>₺150</b>
+                    </div>
+                </div>
+
+                <div class="ticket-table">
+                    <div class="ticket-row head">
+                        <span>Bilet Türü</span>
+                        <span>Birim Fiyat</span>
+                        <span>Kalan Kota</span>
+                        <span>Adet</span>
+                    </div>
+
+                    <div class="ticket-row" data-ticket="Tam Giriş" data-price="350">
+                        <div class="ticket-name"><span class="dot purple"></span><div><strong>Tam Giriş</strong><small>18+ için geçerlidir.</small></div></div>
+                        <strong>₺350</strong>
+                        <strong class="quota">312</strong>
+                        <div class="qty-control"><button class="qty-minus">−</button><span class="qty">2</span><button class="qty-plus">+</button></div>
+                    </div>
+
+                    <div class="ticket-row" data-ticket="Öğrenci" data-price="250">
+                        <div class="ticket-name"><span class="dot blue"></span><div><strong>Öğrenci</strong><small>Öğrenci kimliği ile.</small></div></div>
+                        <strong>₺250</strong>
+                        <strong class="quota">98</strong>
+                        <div class="qty-control"><button class="qty-minus">−</button><span class="qty">1</span><button class="qty-plus">+</button></div>
+                    </div>
+
+                    <div class="ticket-row" data-ticket="VIP Alan" data-price="650">
+                        <div class="ticket-name"><span class="dot cyan"></span><div><strong>VIP Alan</strong><small>Sahne önü ayrıcalığı.</small></div></div>
+                        <strong>₺650</strong>
+                        <strong class="quota">70</strong>
+                        <div class="qty-control"><button class="qty-minus">−</button><span class="qty">0</span><button class="qty-plus">+</button></div>
+                    </div>
+                </div>
+
+                <div class="capacity-large">
+                    <div class="capacity-head">
+                        <span>Etkinlik Kapasitesi</span>
+                        <span>Toplam Kapasite: 1.200 Kişi</span>
+                    </div>
+                    <div class="progress green"><span style="width:40%"></span></div>
+                    <div class="capacity-head" style="margin-top:10px;">
+                        <span>Kalan Kapasite: <span class="green-text">480</span></span>
+                        <span>%40 Dolu</span>
+                    </div>
+                </div>
+            </section>
+
+            <aside class="panel summary-panel">
+                <h3>Sipariş Özeti</h3>
+
+                <div class="summary-event">
+                    <img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=400&q=85" alt="">
+                    <div>
+                        <strong>Yaz Akşamı Açık Hava Konseri</strong>
+                        <span><i class="bi bi-calendar3"></i> <span id="standingSummaryDate">21 Haziran 2024, 21:00</span></span>
+                        <span><i class="bi bi-geo-alt"></i> Merinos AKKM Açık Hava Alanı</span>
+                    </div>
+                </div>
+
+                <div class="summary-title-row">
+                    <span>Seçilen Biletler</span>
+                    <a href="#" id="clearTickets">Temizle</a>
+                </div>
+
+                <div id="ticketSummaryList"></div>
+
+                <div class="summary-separator"></div>
+
+                <div class="summary-line">
+                    <span>Bilet Bedeli</span>
+                    <strong id="ticketSubtotal">₺0</strong>
+                </div>
+                <div class="summary-line">
+                    <span>Hizmet Bedeli <i class="bi bi-info-circle"></i></span>
+                    <strong id="ticketService">₺0</strong>
+                </div>
+
+                <div class="summary-separator"></div>
+
+                <div class="total-row">
+                    <span>Toplam</span>
+                    <b id="ticketTotal">₺0</b>
+                </div>
+
+                <button class="primary-btn"><i class="bi bi-cart3"></i> Sepete Ekle</button>
+                <button class="secondary-btn">Hemen Satın Al</button>
+
+                <div class="secure"><i class="bi bi-lock"></i> 256 bit SSL ile güvenli ödeme</div>
+
+                <div class="summary-notice">
+                    <strong><i class="bi bi-info-circle"></i> Önemli Bilgilendirme</strong>
+                    Koltuksuz etkinliklerde kapasite dolduğunda satış kapanır. Lütfen erken geliniz.
+                </div>
+            </aside>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="feature"><i class="bi bi-shield-check"></i><div><strong>%100 Güvenli Alışveriş</strong><span>Kişisel verileriniz korunur.</span></div></div>
+        <div class="feature"><i class="bi bi-ticket-perforated"></i><div><strong>Anında E-Bilet</strong><span>Biletiniz hesabınıza tanımlanır.</span></div></div>
+        <div class="feature"><i class="bi bi-arrow-counterclockwise"></i><div><strong>İade Garantisi</strong><span>Koşullara uygun iade imkanı.</span></div></div>
+        <div class="feature"><i class="bi bi-headset"></i><div><strong>Müşteri Desteği</strong><span>7/24 destek alabilirsiniz.</span></div></div>
+    </section>
+</main>
+
+<div id="seatedCalendar" class="modal-backdrop">
+    <div class="session-modal">
+        <div class="modal-head">
+            <h3>Koltuklu Etkinlik Seans Takvimi</h3>
+            <button class="modal-close" data-close><i class="bi bi-x-lg"></i></button>
+        </div>
+        <div class="modal-body">
+            <div class="modal-months">
+                <button>Mayıs</button>
+                <button class="active">Haziran</button>
+                <button>Temmuz</button>
+                <button>Ağustos</button>
+            </div>
+            <div class="calendar-grid" data-calendar="seated">
+                <div class="cal-name">Pzt</div><div class="cal-name">Sal</div><div class="cal-name">Çar</div><div class="cal-name">Per</div><div class="cal-name">Cum</div><div class="cal-name">Cmt</div><div class="cal-name">Paz</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="standingCalendar" class="modal-backdrop green-theme-modal">
+    <div class="session-modal">
+        <div class="modal-head">
+            <h3>Koltuksuz Etkinlik Seans Takvimi</h3>
+            <button class="modal-close" data-close><i class="bi bi-x-lg"></i></button>
+        </div>
+        <div class="modal-body">
+            <div class="modal-months">
+                <button>Mayıs</button>
+                <button class="active">Haziran</button>
+                <button>Temmuz</button>
+                <button>Ağustos</button>
+            </div>
+            <div class="calendar-grid" data-calendar="standing">
+                <div class="cal-name">Pzt</div><div class="cal-name">Sal</div><div class="cal-name">Çar</div><div class="cal-name">Per</div><div class="cal-name">Cum</div><div class="cal-name">Cmt</div><div class="cal-name">Paz</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const money = value => new Intl.NumberFormat("tr-TR", {
+        style: "currency",
+        currency: "TRY",
+        maximumFractionDigits: 0
+    }).format(value);
+
+    const viewButtons = document.querySelectorAll(".view-switch button");
+    const screens = document.querySelectorAll(".booking-screen");
+
+    viewButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+            viewButtons.forEach(b => b.classList.remove("active", "purple", "green"));
+            screens.forEach(s => s.classList.remove("active"));
+
+            const view = btn.dataset.view;
+            document.getElementById(view).classList.add("active");
+            btn.classList.add("active", view === "seated" ? "purple" : "green");
+        });
+    });
+
+    const seatMap = document.getElementById("seatMap");
+    const selectedSeats = new Map();
+    const fullSeats = new Set(["A-13", "A-14", "B-1", "B-2", "B-13", "C-1", "C-2", "D-14", "E-15", "F-1", "G-1", "H-14", "I-2", "J-13"]);
+    const accessibleSeats = new Set(["A-15", "B-15", "H-15", "I-15"]);
+
+    function buildSeatMap() {
+        const rows = "ABCDEFGHIJ".split("");
+
+        rows.forEach(row => {
+            const seatRow = document.createElement("div");
+            seatRow.className = "seat-row";
+
+            const labelLeft = document.createElement("div");
+            labelLeft.className = "row-label";
+            labelLeft.textContent = row;
+            seatRow.appendChild(labelLeft);
+
+            for (let i = 1; i <= 15; i++) {
+                const key = `${row}-${i}`;
+                const seat = document.createElement("button");
+                seat.className = "seat";
+                seat.textContent = i;
+                seat.dataset.seat = key;
+
+                if (fullSeats.has(key)) seat.classList.add("full");
+                if (accessibleSeats.has(key)) {
+                    seat.classList.add("accessible");
+                    seat.innerHTML = '<i class="bi bi-wheelchair"></i>';
+                }
+
+                seat.addEventListener("click", () => {
+                    if (seat.classList.contains("full") || seat.classList.contains("accessible")) return;
+
+                    if (selectedSeats.has(key)) {
+                        selectedSeats.delete(key);
+                        seat.classList.remove("selected");
+                    } else {
+                        selectedSeats.set(key, {
+                            code: key,
+                            block: row + " Blok",
+                            no: i,
+                            type: "Standart",
+                            price: 350
+                        });
+                        seat.classList.add("selected");
+                    }
+
+                    updateSeatSummary();
+                });
+
+                seatRow.appendChild(seat);
+            }
+
+            const labelRight = document.createElement("div");
+            labelRight.className = "row-label";
+            labelRight.textContent = "";
+            seatRow.appendChild(labelRight);
+
+            seatMap.appendChild(seatRow);
+        });
+
+        ["C-7", "C-8"].forEach(key => {
+            const btn = document.querySelector(`[data-seat="${key}"]`);
+            if (btn) btn.click();
+        });
+    }
+
+    function updateSeatSummary() {
+        const list = document.getElementById("selectedSeatsList");
+        const count = document.getElementById("seatCount");
+        const subtotalEl = document.getElementById("seatSubtotal");
+        const serviceEl = document.getElementById("seatService");
+        const totalEl = document.getElementById("seatTotal");
+
+        list.innerHTML = "";
+        let subtotal = 0;
+
+        selectedSeats.forEach(item => {
+            subtotal += item.price;
+
+            const line = document.createElement("div");
+            line.className = "summary-line";
+            line.innerHTML = `
+                <span>${item.block}<small>${item.no} / ${item.type}</small></span>
+                <strong>${money(item.price)}</strong>
+            `;
+            list.appendChild(line);
+        });
+
+        const service = selectedSeats.size > 0 ? 40 : 0;
+
+        count.textContent = selectedSeats.size;
+        subtotalEl.textContent = money(subtotal);
+        serviceEl.textContent = money(service);
+        totalEl.textContent = money(subtotal + service);
+    }
+
+    document.getElementById("clearSeats").addEventListener("click", e => {
+        e.preventDefault();
+        selectedSeats.clear();
+        document.querySelectorAll(".seat.selected").forEach(s => s.classList.remove("selected"));
+        updateSeatSummary();
+    });
+
+    buildSeatMap();
+
+    function updateTicketSummary() {
+        const rows = document.querySelectorAll("#standing .ticket-row[data-ticket]");
+        const list = document.getElementById("ticketSummaryList");
+        let subtotal = 0;
+        let count = 0;
+
+        list.innerHTML = "";
+
+        rows.forEach(row => {
+            const qty = Number(row.querySelector(".qty").textContent);
+            const price = Number(row.dataset.price);
+            const name = row.dataset.ticket;
+
+            if (qty > 0) {
+                count += qty;
+                subtotal += qty * price;
+
+                const line = document.createElement("div");
+                line.className = "summary-line";
+                line.innerHTML = `
+                    <span>${name}<small>${qty} Kişi</small></span>
+                    <strong>${money(qty * price)}</strong>
+                `;
+                list.appendChild(line);
+            }
+        });
+
+        const service = count > 0 ? 20 * count : 0;
+        document.getElementById("ticketSubtotal").textContent = money(subtotal);
+        document.getElementById("ticketService").textContent = money(service);
+        document.getElementById("ticketTotal").textContent = money(subtotal + service);
+    }
+
+    document.querySelectorAll(".qty-plus").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const qty = btn.parentElement.querySelector(".qty");
+            qty.textContent = Number(qty.textContent) + 1;
+            updateTicketSummary();
+        });
+    });
+
+    document.querySelectorAll(".qty-minus").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const qty = btn.parentElement.querySelector(".qty");
+            qty.textContent = Math.max(0, Number(qty.textContent) - 1);
+            updateTicketSummary();
+        });
+    });
+
+    document.getElementById("clearTickets").addEventListener("click", e => {
+        e.preventDefault();
+        document.querySelectorAll("#standing .qty").forEach(q => q.textContent = "0");
+        updateTicketSummary();
+    });
+
+    updateTicketSummary();
+
+    document.querySelectorAll("[data-session-group]").forEach(group => {
+        group.querySelectorAll(".session-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const isStanding = group.dataset.sessionGroup === "standing";
+                group.querySelectorAll(".session-btn").forEach(b => b.classList.remove("active", "purple", "green"));
+                btn.classList.add("active", isStanding ? "green" : "purple");
+
+                const date = btn.dataset.date;
+                const time = btn.dataset.time;
+
+                if (isStanding) {
+                    document.getElementById("standingEventDate").textContent = date;
+                    document.getElementById("standingEventTime").textContent = time;
+                    document.getElementById("standingSummaryDate").textContent = `${date.replace(", Cuma", "").replace(", Cumartesi", "")}, ${time}`;
+                } else {
+                    document.getElementById("seatedEventDate").textContent = date;
+                    document.getElementById("seatedEventTime").textContent = time;
+                    document.getElementById("seatedSummaryDate").textContent = `${date.replace(", Cumartesi", "").replace(", Pazar", "")}, ${time}`;
+                }
+            });
+        });
+    });
+
+    document.querySelectorAll("[data-modal]").forEach(btn => {
+        btn.addEventListener("click", () => {
+            document.getElementById(btn.dataset.modal).classList.add("active");
+        });
+    });
+
+    document.querySelectorAll("[data-close]").forEach(btn => {
+        btn.addEventListener("click", () => {
+            btn.closest(".modal-backdrop").classList.remove("active");
+        });
+    });
+
+    document.querySelectorAll(".modal-backdrop").forEach(backdrop => {
+        backdrop.addEventListener("click", e => {
+            if (e.target === backdrop) backdrop.classList.remove("active");
+        });
+    });
+
+    function buildCalendar(selector, dates, colorClass) {
+        const calendar = document.querySelector(selector);
+
+        for (let i = 1; i <= 30; i++) {
+            const day = document.createElement("div");
+            day.className = "cal-day";
+            day.innerHTML = `<span>${i}</span>`;
+
+            const dateData = dates.find(d => d.day === i);
+            if (dateData) {
+                day.classList.add("has-session");
+                day.innerHTML = `<span>${i}</span><small>${dateData.time}</small>`;
+                day.addEventListener("click", () => {
+                    calendar.querySelectorAll(".cal-day").forEach(d => d.classList.remove("selected"));
+                    day.classList.add("selected");
+
+                    const targetGroup = selector.includes("standing") ? "standing" : "seated";
+                    const group = document.querySelector(`[data-session-group="${targetGroup}"]`);
+
+                    const targetButton = Array.from(group.querySelectorAll(".session-btn")).find(btn =>
+                        btn.dataset.date.includes(String(i))
+                    );
+
+                    if (targetButton) targetButton.click();
+
+                    document.querySelector(selector).closest(".modal-backdrop").classList.remove("active");
+                });
+            }
+
+            calendar.appendChild(day);
+        }
+    }
+
+    buildCalendar('[data-calendar="seated"]', [
+        { day: 15, time: "20:30" },
+        { day: 16, time: "20:30" },
+        { day: 22, time: "20:30" },
+        { day: 23, time: "20:30" }
+    ]);
+
+    buildCalendar('[data-calendar="standing"]', [
+        { day: 21, time: "21:00" },
+        { day: 22, time: "21:00" },
+        { day: 28, time: "21:00" },
+        { day: 29, time: "21:00" }
+    ]);
+</script>
+</body>
+</html>

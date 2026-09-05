@@ -1,0 +1,33 @@
+<!DOCTYPE html><html lang="tr"><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<meta name="theme-color" content="#101218"/>
+<title>Bilet Sorgula | BursaMüze</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+<link href="assets/css/site.css" rel="stylesheet"/>
+<link href="assets/css/experience-v80.css" rel="stylesheet"/>
+</head><body class="app-body v80-page"><div id="commonHeader"></div><main class="v80-shell"><section class="v80-hero"><div class="v80-container v80-hero-grid"><div>
+    <div class="v80-eyebrow">Bilet & Rezervasyon</div><h1>Biletinizi birkaç saniyede bulun.</h1><p>PNR, telefon veya T.C. kimlik numarasıyla satın aldığınız bileti doğrulayın; QR kodu, seansı ve işlem detaylarını tek ekranda görüntüleyin.</p></div>
+    <div class="v80-hero-side"><div class="v80-hero-stat"><span>İŞLEM</span><strong>Bilet sorgulama</strong></div><div class="v80-hero-stat"><span>SONUÇ</span><strong>Anında doğrulama</strong></div><div class="v80-hero-stat"><span>DESTEK</span><strong>7/24 dijital erişim</strong></div></div></div></section><section class="v80-main"><div class="v80-container v80-grid">
+<section>
+<div class="v80-section-head"><div><div class="v80-kicker">HIZLI SORGULAMA</div><h2>Bilet bilgilerinizi girin.</h2></div><p>En hızlı sonuç için PNR / Sipariş Numarası kullanın. Demo alanları örnek bilgilerle hazırdır.</p></div>
+<div class="v80-panel"><div class="v80-panel-head"><h3>Sorgulama Formu</h3><small>GÜVENLİ İŞLEM</small></div><div class="v80-panel-body">
+<div class="v80-field-grid">
+<div class="v80-field"><label>PNR / Sipariş No</label><input id="queryPnr" value="BMZ-2026-081729"/></div>
+<div class="v80-field"><label>Telefon</label><input value="0532 555 44 33"/></div>
+<div class="v80-field full"><label>T.C. Kimlik No</label><input value="12345678901"/></div>
+</div><div class="v80-actions"><button class="v80-button yellow" id="queryTicket"><i class="bi bi-search"></i>Bileti Sorgula</button><a class="v80-button ghost" href="iletisim.html"><i class="bi bi-headset"></i>Destek Al</a></div>
+<div id="queryResult" class="v80-hidden" style="margin-top:18px;border-top:1px solid var(--v80-line);padding-top:18px">
+<div class="v80-kicker">BİLET BULUNDU</div><div class="v80-feature" style="margin-top:10px;margin-bottom:0;grid-template-columns:1fr 250px">
+<div class="v80-feature-copy" style="min-height:240px"><small>15 HAZİRAN 2026 · 20:30 - 21:15</small><h2>Cem Adrian Konseri</h2><p>Merinos AKKM Osmangazi Salonu · 2 Bilet · Görsel Plan 48 / 49</p></div>
+<div style="display:grid;place-items:center;font-size:90px;background:#fff"><i class="bi bi-qr-code"></i></div></div></div>
+</div></div></section>
+<aside><div class="v80-side-card dark"><div class="inside"><div class="v80-kicker">BİLET DURUMU</div><h3>Geçerli bilet nasıl anlaşılır?</h3><p>QR kodu, seans saati ve PNR aynı işlem kaydında görünmelidir.</p><div class="v80-mini-list"><div><span>QR Bilet</span><strong>Aktif</strong></div><div><span>İade / İptal</span><strong>Koşullara bağlı</strong></div><div><span>Kapı Açılışı</span><strong>19:45</strong></div></div></div></div>
+<div class="v80-side-card"><div class="inside"><h3>Sık kullanılan işlemler</h3><div class="v80-mini-list"><a href="sss.html"><span>SSS</span><i class="bi bi-arrow-right"></i></a><a href="hesabim.html"><span>Hesabım</span><i class="bi bi-arrow-right"></i></a><a href="iletisim.html"><span>İletişim</span><i class="bi bi-arrow-right"></i></a></div></div></div></aside>
+</div></section></main><div id="commonFooter"></div>
+<script defer src="assets/js/common-layout.js"></script>
+<script defer src="assets/js/site.js"></script>
+<script src="assets/js/motion.js" type="module"></script>
+<script>document.addEventListener("DOMContentLoaded",()=>{document.getElementById("queryTicket")?.addEventListener("click",()=>document.getElementById("queryResult")?.classList.remove("v80-hidden"));});</script></body></html>

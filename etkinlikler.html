@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+
+<html lang="tr"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/><meta content="#10121c" name="theme-color"/><meta content="BursaMüze kültür, müze ve etkinlik platformu." name="description"/><title>Etkinlikler | BursaMüze</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/><link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/><link href="assets/css/site.css" rel="stylesheet"/></head><body class="app-body"><div id="commonHeader"></div>
+<section class="event-page-hero">
+<div class="container event-page-hero-inner">
+<div>
+
+<div class="event-hero-kicker">BURSA MÜZE ETKİNLİK TAKVİMİ</div>
+<h1>Etkinlikleri keşfet.</h1>
+</div>
+<p>Gösteri, atölye, sergi ve rehberli gezileri tarih, kategori, ücret ve okul grubu uygunluğuna göre filtreleyin.</p>
+</div>
+</section>
+<section class="event-browser">
+<div class="container">
+<div class="event-filter-shell">
+<div class="event-filter-top">
+<button class="event-clear-filters event-clear-filters-top" id="clearAllEventFilters" type="button"><i class="bi bi-x-circle"></i> Filtreyi Temizle</button><div class="event-filter-title"><i class="bi bi-sliders"></i><span><small>ETKİNLİK BUL</small><b>Filtrele ve keşfet</b></span></div>
+<div class="event-result-count"><b id="eventResultCount">11</b><span>etkinlik gösteriliyor</span></div>
+</div>
+<div class="filters event-filters" id="eventFilters"><div class="mobile-filter-fixed-date"><button class="filter date-filter-btn" id="dateFilterBtn"><i class="bi bi-calendar3"></i> Tarih Seç</button></div><div class="mobile-filter-scroll"><button class="filter active" data-filter="all">Tümü</button><button class="filter" data-filter="today">Bugün</button><button class="filter" data-filter="week">Bu Hafta</button><button class="filter" data-filter="child"><i class="bi bi-balloon"></i> Çocuk</button><button class="filter" data-filter="atolye"><i class="bi bi-palette"></i> Atölye</button><button class="filter" data-filter="gosteri"><i class="bi bi-magic"></i> Gösteri</button><button class="filter" data-filter="free"><i class="bi bi-ticket"></i> Ücretsiz</button><button class="filter" data-filter="school"><i class="bi bi-mortarboard"></i> Okul Randevusuna Uygun</button></div>
+<div class="museum-filter-wrap">
+<div class="museum-combobox" id="museumCombobox">
+<button aria-expanded="false" class="museum-combobox-trigger" id="museumTrigger" type="button">
+<span class="museum-combobox-value">
+<i class="bi bi-building"></i>
+<span id="museumSelectedText">Tüm Müzeler</span>
+</span>
+<i class="bi bi-chevron-down museum-combobox-chevron"></i>
+</button>
+<div class="museum-combobox-panel" id="museumPanel">
+<div class="museum-search-box">
+<i class="bi bi-search"></i>
+<input autocomplete="off" id="museumSearch" placeholder="Müze ara..." type="text"/>
+</div>
+<div class="museum-options" id="museumOptions">
+<button class="museum-option active" data-museum-value="all" type="button">
+<span><i class="bi bi-grid"></i>Tüm Müzeler</span><i class="bi bi-check2"></i>
+</button>
+<button class="museum-option" data-museum-value="karagoz-muzesi" type="button">
+<span><i class="bi bi-building"></i>Karagöz Müzesi</span><i class="bi bi-check2"></i>
+</button>
+<button class="museum-option" data-museum-value="bursa-kent-muzesi" type="button">
+<span><i class="bi bi-building"></i>Bursa Kent Müzesi</span><i class="bi bi-check2"></i>
+</button>
+<button class="museum-option" data-museum-value="merinos" type="button">
+<span><i class="bi bi-building"></i>Merinos Tekstil Sanayi Müzesi</span><i class="bi bi-check2"></i>
+</button>
+<button class="museum-option" data-museum-value="zindan-kapi" type="button">
+<span><i class="bi bi-building"></i>Zindan Kapı</span><i class="bi bi-check2"></i>
+</button>
+<button class="museum-option" data-museum-value="mevlevihane" type="button">
+<span><i class="bi bi-building"></i>Bursa Mevlevihanesi ve Müzesi</span><i class="bi bi-check2"></i>
+</button>
+<button class="museum-option" data-museum-value="goc-tarihi" type="button">
+<span><i class="bi bi-building"></i>Bursa Göç Tarihi Müzesi</span><i class="bi bi-check2"></i>
+</button>
+<div class="museum-option-empty" id="museumOptionEmpty">Eşleşen müze bulunamadı.</div>
+</div>
+</div>
+</div>
+</div></div><div class="event-calendar-panel" hidden="" id="eventCalendarPanel"><div class="event-calendar-head"><div><small>TAKVİM</small><b id="calendarMonthTitle">Eylül 2026</b></div><div class="event-calendar-actions"><button aria-label="Önceki ay" id="calendarPrevMonth" type="button"><i class="bi bi-chevron-left"></i></button><button aria-label="Sonraki ay" id="calendarNextMonth" type="button"><i class="bi bi-chevron-right"></i></button><button aria-label="Takvimi kapat" id="calendarClose" type="button"><i class="bi bi-x-lg"></i></button></div></div><div class="event-calendar-days" id="eventCalendarDays"></div><div class="event-calendar-bottom"><span id="selectedDateLabel">Bir gün seçerek o tarihteki etkinlikleri görüntüleyin.</span><button id="clearDateFilter" type="button">Tarihi Temizle</button></div></div>
+</div>
+<div class="event-grid event-page-grid" id="eventGrid">
+<article class="event-featured-card" data-category="gosteri" data-child="true" data-date="2026-09-06" data-event="" data-free="false" data-museum="karagoz-muzesi" data-school="true">
+<a class="event-featured-media" href="etkinlik-detay.html"><img alt="" src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&amp;fit=crop&amp;w=1800&amp;q=84"/><div class="featured-shade"></div>
+<span class="featured-badge"><i class="bi bi-star-fill"></i> ÖNE ÇIKAN ETKİNLİK</span>
+<div class="event-featured-copy"><span class="event-place">Karagöz Müzesi</span><h2>Kukla ve Karagöz Buluşması 2026</h2><p>Üç güne yayılan özel program; gösteriler, açık hava buluşmaları ve geleneksel gölge oyununun farklı yorumlarını bir araya getiriyor.</p><div class="featured-meta"><span><i class="bi bi-calendar3"></i> 06 Eylül 2026</span><span><i class="bi bi-clock"></i> 14:00</span><span><i class="bi bi-people"></i> Okul gruplarına uygun</span></div></div>
+</a>
+<div class="featured-footer"><span><small>Başlangıç</small><b>120 TL</b></span><span class="event-card-actions" data-museum="karagoz-muzesi"><a aria-label="Okul randevusu oluştur" class="school-go" href="okul-randevusu.html" title="Okul Randevusuna Uygun"><i class="bi bi-mortarboard-fill"></i></a><a class="go" href="etkinlik-detay.html"><i class="bi bi-arrow-up-right"></i></a></span></div>
+</article><article class="event-card" data-category="gosteri" data-child="true" data-date="2026-09-04" data-event="" data-free="false" data-school="false">
+<a class="event-card-main" href="etkinlik-detay.html">
+<div class="event-media"><img alt="" loading="lazy" src="https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?auto=format&amp;fit=crop&amp;w=1600&amp;q=84"/><span class="event-tag pink">GÖSTERİ</span><span class="event-date"><b>4</b><small>EYL</small></span></div>
+<div class="event-body"><span class="event-place">Karagöz Müzesi</span><h3>Karagöz ile Hacivat Akşam Gösterisi</h3><p class="event-desc">Geleneksel gölge oyunu canlı performans ve kısa müze anlatımıyla sahneleniyor.</p></div>
+</a>
+<div class="event-bottom event-bottom-actions"><span class="event-price"><small>Katılım</small><b>120 TL</b></span><span class="event-card-actions" data-museum="karagoz-muzesi"><a aria-label="Etkinliği incele" class="go" href="etkinlik-detay.html"><i class="bi bi-arrow-up-right"></i></a></span></div>
+</article><article class="event-card" data-category="atolye" data-child="true" data-date="2026-09-05" data-event="" data-free="false" data-school="true">
+<a class="event-card-main" href="etkinlik-detay.html">
+<div class="event-media"><img alt="" loading="lazy" src="https://images.unsplash.com/photo-1531058020387-3be344556be6?auto=format&amp;fit=crop&amp;w=1600&amp;q=84"/><span class="event-tag cyan">ATÖLYE</span><span class="event-date"><b>5</b><small>EYL</small></span></div>
+<div class="event-body"><span class="event-place">Merinos</span><h3>Çini Desen Atölyesi</h3><p class="event-desc">Geleneksel motifleri uygulamalı olarak keşfedeceğiniz katılımcı atölye programı.</p></div>
+</a>
+<div class="event-bottom event-bottom-actions"><span class="event-price"><small>Katılım</small><b>90 TL</b></span><span class="event-card-actions" data-museum="merinos"><a aria-label="Okul randevusu oluştur" class="school-go" href="okul-randevusu.html" title="Okul Randevusuna Uygun"><i class="bi bi-mortarboard-fill"></i></a><a aria-label="Etkinliği incele" class="go" href="etkinlik-detay.html"><i class="bi bi-arrow-up-right"></i></a></span></div>
+</article><article class="event-card" data-category="rehberli" data-child="false" data-date="2026-09-06" data-event="" data-free="true" data-school="true">
+<a class="event-card-main" href="etkinlik-detay.html">
+<div class="event-media"><img alt="" loading="lazy" src="https://images.unsplash.com/photo-1561214115-f2f134cc4912?auto=format&amp;fit=crop&amp;w=1400&amp;q=86"/><span class="event-tag cyan">REHBERLİ</span><span class="event-date"><b>6</b><small>EYL</small></span></div>
+<div class="event-body"><span class="event-place">Bursa Kent Müzesi</span><h3>Uygarlıklar Kenti Bursa</h3><p class="event-desc">Bursa'nın tarihsel katmanlarını müze koleksiyonu üzerinden rehber eşliğinde keşfedin.</p></div>
+</a>
+<div class="event-bottom event-bottom-actions"><span class="event-price"><small>Katılım</small><b>Ücretsiz</b></span><span class="event-card-actions" data-museum="bursa-kent-muzesi"><a aria-label="Okul randevusu oluştur" class="school-go" href="okul-randevusu.html" title="Okul Randevusuna Uygun"><i class="bi bi-mortarboard-fill"></i></a><a aria-label="Etkinliği incele" class="go" href="etkinlik-detay.html"><i class="bi bi-arrow-up-right"></i></a></span></div>
+</article><article class="event-card" data-category="atolye" data-child="true" data-date="2026-09-07" data-event="" data-free="true" data-school="true">
+<a class="event-card-main" href="etkinlik-detay.html">
+<div class="event-media"><img alt="" loading="lazy" src="https://images.unsplash.com/photo-1561214115-f2f134cc4912?auto=format&amp;fit=crop&amp;w=1600&amp;q=84"/><span class="event-tag cyan">ATÖLYE</span><span class="event-date"><b>7</b><small>EYL</small></span></div>
+<div class="event-body"><span class="event-place">Merinos</span><h3>Dokuma Deneyimi Atölyesi</h3><p class="event-desc">Tekstil mirasını dokuma teknikleri ve uygulamalı üretim deneyimiyle yakından tanıyın.</p></div>
+</a>
+<div class="event-bottom event-bottom-actions"><span class="event-price"><small>Katılım</small><b>Ücretsiz</b></span><span class="event-card-actions" data-museum="merinos"><a aria-label="Okul randevusu oluştur" class="school-go" href="okul-randevusu.html" title="Okul Randevusuna Uygun"><i class="bi bi-mortarboard-fill"></i></a><a aria-label="Etkinliği incele" class="go" href="etkinlik-detay.html"><i class="bi bi-arrow-up-right"></i></a></span></div>
+</article><article class="event-card" data-category="sergi" data-child="false" data-date="2026-09-08" data-event="" data-free="false" data-school="false">
+<a class="event-card-main" href="etkinlik-detay.html">
+<div class="event-media"><img alt="" loading="lazy" src="https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?auto=format&amp;fit=crop&amp;w=1600&amp;q=84"/><span class="event-tag cyan">SERGİ</span><span class="event-date"><b>8</b><small>EYL</small></span></div>
+<div class="event-body"><span class="event-place">Zindan Kapı</span><h3>Güncel Sanat Rotası</h3><p class="event-desc">Tarihî mekânda güncel sanat seçkisini farklı üretim disiplinleri üzerinden deneyimleyin.</p></div>
+</a>
+<div class="event-bottom event-bottom-actions"><span class="event-price"><small>Katılım</small><b>120 TL</b></span><span class="event-card-actions"><a aria-label="Etkinliği incele" class="go" href="etkinlik-detay.html"><i class="bi bi-arrow-up-right"></i></a></span></div>
+</article><article class="event-card" data-category="cocuk" data-child="true" data-date="2026-09-09" data-event="" data-free="true" data-school="true">
+<a class="event-card-main" href="etkinlik-detay.html">
+<div class="event-media"><img alt="" loading="lazy" src="https://images.unsplash.com/photo-1564399579883-451a5d44ec08?auto=format&amp;fit=crop&amp;w=1600&amp;q=84"/><span class="event-tag pink">ÇOCUK</span><span class="event-date"><b>9</b><small>EYL</small></span></div>
+<div class="event-body"><span class="event-place">Karagöz Müzesi</span><h3>Çocuklarla Karagöz Tasvirleri</h3><p class="event-desc">Çocukların kendi tasvirlerini hazırladığı eğlenceli ve öğretici yaratıcı atölye.</p></div>
+</a>
+<div class="event-bottom event-bottom-actions"><span class="event-price"><small>Katılım</small><b>Ücretsiz</b></span><span class="event-card-actions" data-museum="karagoz-muzesi"><a aria-label="Okul randevusu oluştur" class="school-go" href="okul-randevusu.html" title="Okul Randevusuna Uygun"><i class="bi bi-mortarboard-fill"></i></a><a aria-label="Etkinliği incele" class="go" href="etkinlik-detay.html"><i class="bi bi-arrow-up-right"></i></a></span></div>
+</article><article class="event-card" data-category="rehberli" data-child="false" data-date="2026-09-10" data-event="" data-free="true" data-school="true">
+<a class="event-card-main" href="etkinlik-detay.html">
+<div class="event-media"><img alt="" loading="lazy" src="https://images.unsplash.com/photo-1561214115-f2f134cc4912?auto=format&amp;fit=crop&amp;w=1600&amp;q=84"/><span class="event-tag cyan">REHBERLİ</span><span class="event-date"><b>10</b><small>EYL</small></span></div>
+<div class="event-body"><span class="event-place">Bursa Göç Tarihi Müzesi</span><h3>Göç Hikâyeleri Rehberli Gezi</h3><p class="event-desc">Bursa'nın göç hafızasını sözlü tarih, obje ve arşiv anlatıları üzerinden keşfedin.</p></div>
+</a>
+<div class="event-bottom event-bottom-actions"><span class="event-price"><small>Katılım</small><b>Ücretsiz</b></span><span class="event-card-actions"><a aria-label="Okul randevusu oluştur" class="school-go" href="okul-randevusu.html" title="Okul Randevusuna Uygun"><i class="bi bi-mortarboard-fill"></i></a><a aria-label="Etkinliği incele" class="go" href="etkinlik-detay.html"><i class="bi bi-arrow-up-right"></i></a></span></div>
+</article><article class="event-card" data-category="gosteri" data-child="true" data-date="2026-09-11" data-event="" data-free="false" data-school="false">
+<a class="event-card-main" href="etkinlik-detay.html">
+<div class="event-media"><img alt="" loading="lazy" src="https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?auto=format&amp;fit=crop&amp;w=1600&amp;q=84"/><span class="event-tag pink">GÖSTERİ</span><span class="event-date"><b>11</b><small>EYL</small></span></div>
+<div class="event-body"><span class="event-place">Karagöz Müzesi</span><h3>Hayal Perdesinde Bursa</h3><p class="event-desc">Karagöz geleneğini Bursa kültürüyle buluşturan özel gölge oyunu gösterisi.</p></div>
+</a>
+<div class="event-bottom event-bottom-actions"><span class="event-price"><small>Katılım</small><b>120 TL</b></span><span class="event-card-actions"><a aria-label="Etkinliği incele" class="go" href="etkinlik-detay.html"><i class="bi bi-arrow-up-right"></i></a></span></div>
+</article><article class="event-card" data-category="atolye" data-child="false" data-date="2026-09-12" data-event="" data-free="true" data-school="true">
+<a class="event-card-main" href="etkinlik-detay.html">
+<div class="event-media"><img alt="" loading="lazy" src="https://images.unsplash.com/photo-1561214115-f2f134cc4912?auto=format&amp;fit=crop&amp;w=1600&amp;q=84"/><span class="event-tag cyan">ATÖLYE</span><span class="event-date"><b>12</b><small>EYL</small></span></div>
+<div class="event-body"><span class="event-place">Merinos</span><h3>Sanayi Hafızası Tasarım Atölyesi</h3><p class="event-desc">Müze koleksiyonundan ilham alan uygulamalı tasarım etkinliği ve kısa rehberli rota.</p></div>
+</a>
+<div class="event-bottom event-bottom-actions"><span class="event-price"><small>Katılım</small><b>Ücretsiz</b></span><span class="event-card-actions"><a aria-label="Okul randevusu oluştur" class="school-go" href="okul-randevusu.html" title="Okul Randevusuna Uygun"><i class="bi bi-mortarboard-fill"></i></a><a aria-label="Etkinliği incele" class="go" href="etkinlik-detay.html"><i class="bi bi-arrow-up-right"></i></a></span></div>
+</article><article class="event-card" data-category="sergi" data-child="false" data-date="2026-09-13" data-event="" data-free="true" data-school="false">
+<a class="event-card-main" href="etkinlik-detay.html">
+<div class="event-media"><img alt="" loading="lazy" src="https://images.unsplash.com/photo-1564399579883-451a5d44ec08?auto=format&amp;fit=crop&amp;w=1600&amp;q=84"/><span class="event-tag cyan">SERGİ</span><span class="event-date"><b>13</b><small>EYL</small></span></div>
+<div class="event-body"><span class="event-place">Bursa Kent Müzesi</span><h3>Bursa'da Gündelik Hayat Seçkisi</h3><p class="event-desc">Kent belleğini gündelik yaşam objeleri, fotoğraflar ve arşiv belgeleri üzerinden okuyun.</p></div>
+</a>
+<div class="event-bottom event-bottom-actions"><span class="event-price"><small>Katılım</small><b>Ücretsiz</b></span><span class="event-card-actions"><a aria-label="Etkinliği incele" class="go" href="etkinlik-detay.html"><i class="bi bi-arrow-up-right"></i></a></span></div>
+</article>
+</div>
+<div class="event-empty" hidden="" id="eventEmpty"><i class="bi bi-calendar-x"></i><h3>Bu filtrede etkinlik bulunamadı.</h3><p>Başka bir kategori veya tarih seçebilirsiniz.</p><button class="btn btn-dark" id="resetEventFilters">Tüm Etkinlikleri Göster</button></div>
+</div>
+</section>
+<div id="commonFooter"></div><script defer="" src="assets/js/common-layout.js"></script><script defer="" src="assets/js/site.js"></script><script src="assets/js/motion.js" type="module"></script></body></html>
